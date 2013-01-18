@@ -4,6 +4,6 @@
 
 
 function FirstController($scope) {
-   $scope.name = "Prof. Richard";
+   $scope.name = "Lydia";
 }
 

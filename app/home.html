@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<html ng-app="app">
+
+<head>
+<script src="./lib/angular/angular.js"></script>
+<script src="./lib/angular/angular-resource.min.js"></script>
+<script src="./lib/angular/angular-mocks.js"></script>
+<script src="./js/app.js"></script>
+<script src="./js/controllers.js"></script>
+
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PWC</title>
@@ -59,8 +68,8 @@
                 </div>
               </div><!-- /navbar-inner -->
             </div><!-- /navbar -->
-            <div class="hero-unit">
-            <h4>Hello <b>Lydia</b>, welcome to LinkAge. </h4>
+            <div class="hero-unit" ng-controller="FirstController">
+            <h4>Hello <b>{{name}}</b>, welcome to LinkAge. </h4>
             <fieldset>
             	  <legend>Notification board: <i class="icon-refresh"></i></legend>
                 <table class="table table-hover">

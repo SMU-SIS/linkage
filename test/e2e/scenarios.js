@@ -4,8 +4,6 @@
 
 describe('Testing PWC', function() {
 
-
-
   describe('Home', function() {
 
     beforeEach(function() {
@@ -13,13 +11,11 @@ describe('Testing PWC', function() {
     });
 
 
-    it('should render FYP in first table row', function() {
+    it('should render Lydia from the Angularjs controller', function() {
       expect(element('h4').text()).
         toMatch("Hello Lydia, welcome to LinkAge. ");
       //pause();
     });
-
-
 
   });
 
@@ -54,7 +50,83 @@ describe('Testing PWC', function() {
     it('should render Lydia as first name in the table', function() {
       expect(element('tr:nth-child(1) td').text()).
         toMatch("Lydia");
+        //pause();
     });
 
   });
+
+  describe('Add Project', function() {
+
+    beforeEach(function() {
+      browser().navigateTo('../../app/add_project.html');
+    });
+
+
+    it('should ...', function() {
+      //expect(element('tr:nth-child(1) td').text()).
+      //  toMatch("Lydia");
+      //pause();
+    });
+
+  });
+
+  describe('Data Analysis', function() {
+
+    beforeEach(function() {
+      browser().navigateTo('../../app/dataAnalysis.html');
+    });
+
+
+    it('should .....', function() {
+      //expect(element('tr:nth-child(1) td').text()).
+      //  toMatch("Lydia");
+      //pause();
+    });
+
+  });
+
+  describe('Report', function() {
+
+    beforeEach(function() {
+      browser().navigateTo('../../app/report.html');
+    });
+
+
+    it('should .....', function() {
+      //expect(element('tr:nth-child(1) td').text()).
+      //  toMatch("Lydia");
+      //pause();
+    });
+
+  });
+
+  describe('Skillset', function() {
+
+    beforeEach(function() {
+      browser().navigateTo('../../app/skillset.html');
+    });
+
+
+    it('should .....', function() {
+      //expect(element('tr:nth-child(1) td').text()).
+      //  toMatch("Lydia");
+    });
+
+  });
+
+  describe('Trending', function() {
+
+    beforeEach(function() {
+      browser().navigateTo('../../app/trending.html');
+    });
+
+
+    it('should .....', function() {
+      //expect(element('tr:nth-child(1) td').text()).
+      //  toMatch("Lydia");
+      //pause();
+    });
+
+  });
+
 });
