@@ -1,0 +1,79 @@
+#login_logo {
+	background: url(../img/pwc_logo.jpg) center no-repeat;
+	margin: auto;
+	height: 160px;
+	width: 156px;
+}
+#login_center {
+	margin: auto;
+	height: 380px;
+	width: 350px;
+}
+
+body {
+/*	background-color: #42413C; */
+	margin: 0;
+	padding: 0;
+}
+
+/* ~~ Element/tag selectors ~~ */
+ul, ol, dl { 
+	padding: 0;
+	margin: 0;
+}
+
+/* ~~ this fixed width container surrounds the other divs ~~ */
+
+.header {
+	
+}
+
+.logo{
+	background: url(../img/pwc_logo.jpg) left no-repeat;
+	padding-top:120px;
+}
+
+.content {
+	padding: 10px 0;
+}
+
+fieldset{
+	border-radius: 5px;
+}
+/* ~~ The footer ~~ */
+.footer {
+	padding: 10px 0;
+}
+
+#task_table {
+	float: left;
+	width: 700px;
+	margin-left:10px;
+}
+
+#emp_list ul{
+	list-style:none;
+	padding:5px 8px;
+	margin:5px 0px;
+	border: 1px solid #555555;
+	border-radius:3px;
+	height:150px;
+	overflow:scroll;
+}
+
+/* Chevrons */
+.icon-remove-right {
+  float: right;
+  margin-top: 2px;
+  margin-right: -6px;
+  opacity:0.5;
+}
+
+.icon-remove:hover{
+	opacity:0.9;
+}
+
+.report_tabs{
+	width:26%;
+	word-break:break-all;
+}
