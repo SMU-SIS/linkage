@@ -17,6 +17,7 @@
       annimations.push(testAnnimation);
       
       //To simulate posts
+      /*
       $httpBackend.whenPOST('/annimation').respond(function(method, url, data) {
         var newAnnimation = JSON.parse(data);
         count = count + 1;
@@ -25,9 +26,11 @@
         return [200,newAnnimation];
     
       });
+      */  
       
+      var user = {"name":"Lydia"};
       //To simulate GETs
-  	  //$httpBackend.whenGET('/player').respond(player);
+  	  $httpBackend.whenGET('/user').respond(user);
       $httpBackend.whenGET(/^partials/).passThrough();
       
 	});
