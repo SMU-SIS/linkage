@@ -9,6 +9,36 @@
 	height: 380px;
 	width: 350px;
 }
+.noti_icon{
+	list-style:none;
+	margin-top:98px;
+}
+.noti_icon i{
+	vertical-align: text-top;
+}
+.noti_icon a{
+	cursor:pointer;
+	margin-left:5px;
+	padding:6px 3px 3px;
+}
+.noti_icon a:hover{
+	cursor:pointer;
+	background:#cccccc;
+	text-decoration: none;
+}
+.noti_icon sup{
+	background-color: #f03d25;
+	border: 1px solid #d83722;
+	border-bottom: 1px solid #c0311e;
+	border-top: 1px solid #e23923;
+	border-radius: 2px;
+	box-shadow: 0 1px 0 rgba(0, 39, 121, .77);
+	padding: 0 1px;
+	color: #fff;
+	font-size: 9px;
+	font-weight: bold;
+	margin-left:-5px;
+}
 
 body {
 /*	background-color: #42413C; */
@@ -37,9 +67,23 @@ ul, ol, dl {
 	padding: 10px 0;
 }
 
-fieldset{
+.noti_sidebar{
 	border-radius: 5px;
 }
+
+.schedule_summary{
+	margin-top:18px;
+}
+.schedule_summary table { table-layout: fixed; }
+.schedule_summary table th, table td { overflow: hidden; }
+.schedule_summary table td.marked{
+	background-color: #0088cc;
+	text-align:center;
+}
+.schedule_summary .task_col{
+	width:width: 30%;
+}
+
 /* ~~ The footer ~~ */
 .footer {
 	padding: 10px 0;
