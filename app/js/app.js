@@ -32,5 +32,6 @@
       //To simulate GETs
   	  $httpBackend.whenGET('/user').respond(user);
       $httpBackend.whenGET(/^partials/).passThrough();
+      $httpBackend.whenGET('/pwc/message').passThrough();
       
 	});
