@@ -1,5 +1,4 @@
 $(document).ready(function(){
-    $("[rel='tooltip']").tooltip();
     $(".header").load("header.html");
     $('.footer').load("footer.html");
     var role = readCookie("user");
@@ -10,11 +9,6 @@ $(document).ready(function(){
 	}else{
 		window.location.href = "index.html";
 	}
-    $(".icon-cogwheel-large").click(function(){
-    	eraseCookie("user");
-    	localStorage.setItem("user", "");
-    	window.location ="index.html";
-    });
 });
 function createCookie(c_name,value,exdays) {
     var exdate=new Date();

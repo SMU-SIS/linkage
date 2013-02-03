@@ -5,7 +5,7 @@
 	width: 156px;
 }
 .msg_box{
-	padding:5px;
+	padding:5px; margin-bottom: 10px!important;
 }
 .base_logo{
 	position:absolute;
@@ -71,7 +71,13 @@
 	margin-left:30px;
 }
 #login_center .btn{
-	width:220px;
+	width:245px;
+}
+.switch, .help-bolck{
+	color: #eeeeee;
+}
+.role_select input{
+	margin-left: 15px!important;
 }
 @media (max-width: 767px){
 	#login_center .btn{

@@ -6,3 +6,14 @@
 	  	<a href="#" rel="tooltip" data-placement="right" data-original-title="Logout"><i class="icon-cogwheel-large"></i></a>
   	</li>
 </ul>
+
+<script type="text/javascript">
+$(document).ready(function(){
+    $("[rel='tooltip']").tooltip();
+    $(".icon-cogwheel-large").on("click",function(){
+    	eraseCookie("user");
+    	localStorage.setItem("user", "");
+    	window.location ="index.html";
+    });
+});
+</script>
