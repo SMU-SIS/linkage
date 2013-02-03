@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en" ng-app="app">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>PWC Linkage</title>
+	<link href="css/main.css" rel="stylesheet" type="text/css">
+	<link href="css/bootstrap.css" rel="stylesheet" type="text/css">
+	<link href="css/bootstrap-responsive.css" rel="stylesheet" type="text/css">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.1/angular.js"></script>
+    <script src="js/include.js"></script>
+    <script language="javascript" type="text/javascript">
+      angular.module('app', []);
+      
+      //Whatever you put on the controller scope,
+      //will be availalble in the HTML element bound to the controller.
+      function MyController($scope){
+        $scope.username = localStorage.getItem("username");
+        $scope.fullname = localStorage.getItem("fullname");
+        $scope.role = readCookie("user");
+      }
+    </script>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+
+</head>
+
+<body ng-controller="MyController">
+
+<div class="container">
+  <div class="header row"></div>
+
+  <div class="content">
+  	<div class="navbar"></div>
+    <h4 class="greeting">Hello {{username}}, welcome to LinkAge. </h4>
+
+    <div class="row">
+         <fieldset class="noti_sidebar span3 hidden-phone">
+         	  <legend>Personal Profile:</legend>
+                  Name: {{fullname}}<br/>
+	          Position: {{role}}<br/>
+	          Skillset: 
+	          <ul>
+	          	<li>Perform Windows Configuration</li>
+	          	<li>Window Server Testing</li>
+	          </ul>
+	          <a class="btn pull-right"><i class="icon-edit"></i>  Edit</a>
+         </fieldset>
+         <div class="span8 schedule_summary">
+            <div class="tabbable">
+			  <ul class="nav nav-tabs">
+			    <li class="active"><a href="#tab1" data-toggle="tab">Current Project Schedule</a></li>
+			    <li><a href="#tab2" data-toggle="tab">History Projects</a></li>
+			  </ul>
+			  <div class="tab-content">
+			    <div class="tab-pane active" id="tab1">
+			      <table class="table table-bordered">
+		         	  <thead>
+		         	  	<tr>
+			         	  	<th class="proj_col" style="width: 29%"></th>
+			         	  	<th style="width: 11%">Today</th>
+			         	  	<th style="width: 10%">19/01</th>
+			         	  	<th style="width: 10%">20/01</th>
+			         	  	<th style="width: 10%">21/01</th>
+			         	  	<th style="width: 10%">21/01</th>
+			         	  	<th style="width: 10%">22/01</th>
+			         	  	<th style="width: 10%">23/01</th>
+		         	  	</tr>
+		         	  </thead>
+		              <tr>
+		                <td class="task_col"><b>Project A</b> - Task 1</td>
+		                <td class="marked"><i class="icon-briefcase"></i></td>
+		                <td class="marked"><i class="icon-briefcase"></i></td>
+		                <td class="marked"><i class="icon-briefcase"></i></td>
+		                <td></td>
+		                <td></td>
+		                <td></td>
+		                <td></td>
+		              </tr>
+		              <tr>
+		                <td class="task_col"><b>Project A</b> - Task 2</td>
+		                <td></td>
+		                <td class="marked"><i class="icon-briefcase"></i></td>
+		                <td class="marked"><i class="icon-briefcase"></i></td>
+		                <td class="marked"><i class="icon-briefcase"></i></td>
+		                <td></td>
+		                <td></td>
+		                <td></td>
+		              </tr>
+		              <tr>
+		                <td class="task_col"><b>Project E</b> - Task 3</td>
+		                <td></td>
+		                <td></td>
+		                <td></td>
+		                <td></td>
+		                <td class="marked"><i class="icon-briefcase"></i></td>
+		                <td class="marked"><i class="icon-briefcase"></i></td>
+		                <td class="marked"><i class="icon-briefcase"></i></td>
+		              </tr>
+		            </table>
+			    </div>
+			    <div class="tab-pane" id="tab2">
+			      <p>No History Projects.</p>
+			    </div>
+			  </div>
+			</div>
+         </div>
+      </div>
+  </div>
+  <div class="footer">
+    <p>Copyright 2010-2013 PricewaterhouseCoopers. All rights reserved. </p>
+    <!-- end .footer --></div>
+  <!-- end .container --></div>
+</body>
+<script type="text/javascript">
+//document.getElementById("username").innerHTML = localStorage.getItem("username");
+$(document).ready(function(){
+	$("#home").addClass("active");
+});
+
+</script>
+</html>

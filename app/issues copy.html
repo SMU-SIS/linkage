@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PWC</title>
+  <link href="css/main.css" rel="stylesheet" type="text/css">
+  <link href="css/bootstrap.css" rel="stylesheet" type="text/css">
+  <link href="css/bootstrap-responsive.css" rel="stylesheet" type="text/css">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/cupertino/jquery-ui.css" type="text/css" media="all" />
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/include.js"></script>
+  <!-- Utility Dependencies -->
+  <script src="http://yui.yahooapis.com/2.9.0/build/yahoo-dom-event/yahoo-dom-event.js"></script> 
+  <script src="http://yui.yahooapis.com/2.9.0/build/element/element-min.js"></script> 
+  <!-- Needed for Menus, Buttons and Overlays used in the Toolbar -->
+  <script src="http://yui.yahooapis.com/2.9.0/build/container/container_core-min.js"></script>
+  <script src="http://yui.yahooapis.com/2.9.0/build/menu/menu-min.js"></script>
+  <script src="http://yui.yahooapis.com/2.9.0/build/button/button-min.js"></script>
+  <!-- Source file for Rich Text Editor-->
+  <script src="http://yui.yahooapis.com/2.9.0/build/editor/editor-min.js"></script>
+  <script src="js/issue.js"></script>
+  <style type="text/css">
+      h1, h2, h3 {
+          line-height: 18px!important;
+      }
+  </style>
+<!-- Skin CSS file -->
+  <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.9.0/build/assets/skins/sam/skin.css">
+
+  </script>
+</head>
+
+<body>
+
+<div class="container">
+    <div class="header row"></div>
+
+  <div class="content">
+  	<div class="navbar"></div>
+            <h1> Project FYP 
+            	<a href="report.html" class="btn btn-info">Back to Report</a>
+            	<a class="btn" onclick="gen_report()">Generate Report >></a>
+            </h1>
+            <hr/>
+            <div id="dialog" title="Tab data">
+			  <form>
+			    <fieldset class="ui-helper-reset">
+			      <label>Issue: </label>
+                  <input type="text" class="span2 input_issue" id="appendedDropdownButton">
+                  <label>Sub-issue:</label>
+  				  <input type="text" class="span2 input_subissue">
+			    </fieldset>
+			  </form>
+			</div>
+			 
+			<button id="add_tab" class="btn">+Add Issue</button>
+            <div id="tabs">
+			  <ul>
+			    <li><a href="#tabs-1">Issue#1: DR-1</a><span class="ui-icon ui-icon-closethick" role="presentation">Remove Tab</span></li>
+			  </ul>
+			  <div id="tabs-1">
+			  	<h2>Issue#1 DR-1</h2>
+          <h5>Description</h5>
+          <textarea name="msgpost1" id="msgpost1">
+            We noted the following discrepancies with the exit form (for staff leaving ITB):
+          </textarea><br />
+          <button class="btn save_btn">Save</button>
+          <h5>Implications</h5>
+          <textarea name="msgpost2" id="msgpost2">
+            User access exit procedure could be improperly administered when the process does not strictly ensure that the  required documents have been completed .
+          </textarea><br />
+          <h5>Recommendations</h5>
+          <textarea name="msgpost3" id="msgpost3">
+            We recommend that MMM adhere strictly to the exit procedures for School infrastructure team. The user exit procedures documentation should also be endorsed by relevant authorized personnel, etc. 
+					</textarea><br />
+					<h5>Management Comments</h5>
+          <textarea id="myArea"></textarea><br />
+          <button class="btn save_btn">Save</button><br /><br />
+          <button class="btn btn-danger btn-delete">Delete Issue</button> 
+			  </div>
+			</div>
+            </div>
+    <!-- end .content --></div>
+  <div class="footer">
+    <p>Copyright 2010-2013 PricewaterhouseCoopers. All rights reserved. </p>
+    <!-- end .footer --></div>
+  <!-- end .container --></div>
+</body>
+</html>

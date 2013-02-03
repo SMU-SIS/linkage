@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,59 +7,21 @@
 <link href="css/main.css" rel="stylesheet" type="text/css">
 <link href="css/bootstrap.css" rel="stylesheet" type="text/css">
 <link href="css/bootstrap-responsive.css" rel="stylesheet" type="text/css">
+<link rel="icon" href="favicon.ico" type="image/x-icon">
 <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/flick/jquery-ui.css" type="text/css" media="all" />
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+    <script src="js/include.js"></script>
 </head>
 
 <body>
 
 <div class="container">
-  <div class="header"><div class="logo hidden-phone"> </div>
-    <!-- end .header --></div>
+    <div class="header row"></div>
+
   <div class="content">
-    <div class="navbar">
-    	<div class="navbar-inner">
-        	<div class="container">
-            	<a class="btn btn-navbar" data-toggle="collapse" data-target=".navbar-responsive-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </a>
-                <a class="brand">PWC</a>
-                <div class="nav-collapse collapse navbar-responsive-collapse">
-                	<ul class="nav">
-                      	<li><a href="home.html">Home</a></li>
-                      	<li class="dropdown" id="project_mgmt">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Project Management<b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                              <li><a href="projects.html">Current Project</a></li>
-                              <li><a href="add_project.html">Create Project</a></li>
-                            </ul>
-                      	</li>
-                        <li class="dropdown" id="report">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Report<b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                              <li><a href="report.html">FYP</a></li>
-                              <li><a href="#">PWC</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="#">My Schedule</a></li>
-                        <li><a href="skillset.html">HR Management</a></li>
-                      	<li class="dropdown active" id="analytics">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Analytics<b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                              <li><a href="dataAnalysis.html">Data Analysis</a></li>
-                              <li class="active"><a href="trending.html">Trending</a></li>
-                            </ul>
-                      	</li>
-                      	<li><a href="message.html">Message(<b id="msg_num">3</b>)</a></li>
-                    </ul>
-                  </div><!-- /.nav-collapse -->
-                </div>
-              </div><!-- /navbar-inner -->
-        	</div><!-- /navbar -->
+  	<div class="navbar"></div>
             <h3>In-house Data Analysis</h3>
             <h4><em>Period:</em></h4>
             <div class="row">
@@ -76,94 +38,95 @@
             </div>
     <!-- end .content --></div>
   <div class="footer">
-    <p>© 2010-2013 PricewaterhouseCoopers. All rights reserved. </p>
+    <p>Copyright 2010-2013 PricewaterhouseCoopers. All rights reserved. </p>
     <!-- end .footer --></div>
   <!-- end .container --></div>
 </body>
 <script>
-var graph;
-            var xPadding = 30;
-            var yPadding = 30;
-            
-            var data = { values:[
-                { X: "Jan", Y: 12 },
-                { X: "Feb", Y: 28 },
-                { X: "Mar", Y: 18 },
-                { X: "Apr", Y: 34 },
-                { X: "May", Y: 40 },
-            ]};
-
-            // Returns the max Y value in our data list
-            function getMaxY() {
-                var max = 0;
-                
-                for(var i = 0; i < data.values.length; i ++) {
-                    if(data.values[i].Y > max) {
-                        max = data.values[i].Y;
-                    }
-                }
-                
-                max += 10 - max % 10;
-                return max;
-            }
-            
-            // Return the x pixel for a graph point
-            function getXPixel(val) {
-                return ((graph.width() - xPadding) / data.values.length) * val + (xPadding * 1.5);
-            }
-            
-            // Return the y pixel for a graph point
-            function getYPixel(val) {
-                return graph.height() - (((graph.height() - yPadding) / getMaxY()) * val) - yPadding;
-            }
-
-            $(document).ready(function() {
-                graph = $('#graph');
-                var c = graph[0].getContext('2d');            
-                
-                c.lineWidth = 2;
-                c.strokeStyle = '#333';
-                c.font = 'italic 8pt sans-serif';
-                c.textAlign = "center";
-                
-                // Draw the axises
-                c.beginPath();
-                c.moveTo(xPadding, 0);
-                c.lineTo(xPadding, graph.height() - yPadding);
-                c.lineTo(graph.width(), graph.height() - yPadding);
-                c.stroke();
-                
-                // Draw the X value texts
-                for(var i = 0; i < data.values.length; i ++) {
-                    c.fillText(data.values[i].X, getXPixel(i), graph.height() - yPadding + 20);
-                }
-                
-                // Draw the Y value texts
-                c.textAlign = "right"
-                c.textBaseline = "middle";
-                
-                for(var i = 0; i < getMaxY(); i += 10) {
-                    c.fillText(i, xPadding - 10, getYPixel(i));
-                }
-                
-                c.strokeStyle = '#f00';
-                
-                // Draw the line graph
-                c.beginPath();
-                c.moveTo(getXPixel(0), getYPixel(data.values[0].Y));
-                for(var i = 1; i < data.values.length; i ++) {
-                    c.lineTo(getXPixel(i), getYPixel(data.values[i].Y));
-                }
-                c.stroke();
-                
-                // Draw the dots
-                c.fillStyle = '#333';
-                
-                for(var i = 0; i < data.values.length; i ++) {  
-                    c.beginPath();
-                    c.arc(getXPixel(i), getYPixel(data.values[i].Y), 4, 0, Math.PI * 2, true);
-                    c.fill();
-                }
-            });
+	var graph;
+	var xPadding = 30;
+	var yPadding = 30;
+	
+	var data = { values:[
+	    { X: "Jan", Y: 12 },
+	    { X: "Feb", Y: 28 },
+	    { X: "Mar", Y: 18 },
+	    { X: "Apr", Y: 34 },
+	    { X: "May", Y: 40 },
+	]};
+	
+	// Returns the max Y value in our data list
+	function getMaxY() {
+	    var max = 0;
+	    
+	    for(var i = 0; i < data.values.length; i ++) {
+	        if(data.values[i].Y > max) {
+	            max = data.values[i].Y;
+	        }
+	    }
+	    
+	    max += 10 - max % 10;
+	    return max;
+	}
+	
+	// Return the x pixel for a graph point
+	function getXPixel(val) {
+	    return ((graph.width() - xPadding) / data.values.length) * val + (xPadding * 1.5);
+	}
+	
+	// Return the y pixel for a graph point
+	function getYPixel(val) {
+	    return graph.height() - (((graph.height() - yPadding) / getMaxY()) * val) - yPadding;
+	}
+	
+	$(document).ready(function() {
+		$("#analytics").addClass("active");
+	    graph = $('#graph');
+	    var c = graph[0].getContext('2d');            
+	    
+	    c.lineWidth = 2;
+	    c.strokeStyle = '#333';
+	    c.font = 'italic 8pt sans-serif';
+	    c.textAlign = "center";
+	    
+	    // Draw the axises
+	    c.beginPath();
+	    c.moveTo(xPadding, 0);
+	    c.lineTo(xPadding, graph.height() - yPadding);
+	    c.lineTo(graph.width(), graph.height() - yPadding);
+	    c.stroke();
+	    
+	    // Draw the X value texts
+	    for(var i = 0; i < data.values.length; i ++) {
+	        c.fillText(data.values[i].X, getXPixel(i), graph.height() - yPadding + 20);
+	    }
+	    
+	    // Draw the Y value texts
+	    c.textAlign = "right"
+	    c.textBaseline = "middle";
+	    
+	    for(var i = 0; i < getMaxY(); i += 10) {
+	        c.fillText(i, xPadding - 10, getYPixel(i));
+	    }
+	    
+	    c.strokeStyle = '#f00';
+	    
+	    // Draw the line graph
+	    c.beginPath();
+	    c.moveTo(getXPixel(0), getYPixel(data.values[0].Y));
+	    for(var i = 1; i < data.values.length; i ++) {
+	        c.lineTo(getXPixel(i), getYPixel(data.values[i].Y));
+	    }
+	    c.stroke();
+	    
+	    // Draw the dots
+	    c.fillStyle = '#333';
+	    
+	    for(var i = 0; i < data.values.length; i ++) {  
+	        c.beginPath();
+	        c.arc(getXPixel(i), getYPixel(data.values[i].Y), 4, 0, Math.PI * 2, true);
+	        c.fill();
+	    }
+	});
 </script>
 </html>
