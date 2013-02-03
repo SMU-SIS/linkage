@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PWC Linkage</title>
+<link href="css/main.css" rel="stylesheet" type="text/css">
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css">
+<link href="css/bootstrap-responsive.css" rel="stylesheet" type="text/css">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+    <script src="js/include.js"></script>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<%@ page language="java" import="java.util.*"%>
+</head>
+
+<body>
+
+<div class="container">
+  <div class="header row"></div>
+
+  <div class="content">
+    <div class="navbar"></div>
+  	
+    <h4>Hello <b id="username">Lydia</b>, welcome to LinkAge. </h4>
+    <div class="row"><div class="span7">
+        <legend><small>Notification board:</small> <sub><i class="icon-refresh"></i></sub></legend>
+        <table class="table">
+          <tr>
+            <td><a href="">Project PWC</a>'s dateline is today, 2.30pm</td>
+            <td><i class="icon-remove"></i></td>
+          </tr>
+          <tr>
+            <td><a href="">3 new message</a> for you since you last logged in</td>
+            <td><i class="icon-remove"></i></td>
+          </tr>
+          <tr>
+            <td>You have been assigned <a href="">3 new projects</a></td>
+            <td><i class="icon-remove"></i></td>
+          </tr>
+          <tr>
+            <td>Your <a href="">work schedule</a> has been updated</td>
+            <td><i class="icon-remove"></i></td>
+          </tr>
+  		</table>
+      </div></div>
+  </div>
+  <div class="footer">
+    <p>Copyright 2010-2013 PricewaterhouseCoopers. All rights reserved. </p>
+    <!-- end .footer --></div>
+  <!-- end .container --></div>
+</body>
+<script type="text/javascript">
+document.getElementById("username").innerHTML = localStorage.getItem("user");
+$(document).ready(function(){
+	$("#home").addClass("active");
+});
+</script>
+</html>

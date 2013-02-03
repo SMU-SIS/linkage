@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PWC</title>
+<link href="css/main.css" rel="stylesheet" type="text/css">
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css">
+<link href="css/bootstrap-responsive.css" rel="stylesheet" type="text/css">
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<style type="text/css" title="currentStyle">
+			@import "css/demo_table.css";
+		</style>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	<script type="text/javascript" language="javascript" src="js/jquery.dataTables.js"></script>
+    <script src="js/include.js"></script>
+	<script type="text/javascript" charset="utf-8">
+        $(document).ready(function() {
+            $('#emp_table').dataTable();
+			$('#next_btn').click(function(){
+				$(this).hide();
+				$(".dataTables_wrapper").hide();
+				$(".task_wrap").show();
+			});
+			$('#prev_btn').click(function(){
+				$('#next_btn').show();
+				$(".dataTables_wrapper").show();
+				$(".task_wrap").hide();
+			});
+			$("#emp_table td a#ongoing_proj").each(function(){
+				$(this).popover({html: true});
+			});
+			$("#project").addClass("active");
+			var accord_count = 3;
+			$("#add_task").click(function(){
+				var new_accord = $('<div />').appendTo(".accordion").addClass("accordion-group");
+				new_accord.html('<div class="accordion-heading">'
+					      + '<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#task'+ accord_count + '">'
+					      + 'Task #'+ accord_count + ':</a></div>'
+					    +'<div id="task'+ accord_count + '" class="accordion-body collapse">'
+					    +'<div class="accordion-inner">'
+					        +'<label for="task_name">Task Name:</label>'
+					        +'<input type="text" id="task_name"/>'
+					        +'<div class="row">'
+					        +'<div class="span2">'
+					        +'<label for="start_date">Start Date:</label>'
+					        +'<input type="text" id="start_date" class="input-medium"/>'
+					        +'</div>'
+					        +'<div class="span2">'
+					        +'<label for="end_date">End Date:</label>'
+					        +'<input type="text" id="end_date" class="input-medium"/>'
+					        +'</div>'
+					        +'</div>'
+					        +'<label for="end_date">Hours:</label>'
+					        +'<input type="number" id="hours" class="input-small"/>'
+					        +'<label for="members">Who is responsible?</label>'
+					        +'<input type="text" id="members" class="input-xlarge"/>'
+					        +'</div>'
+					    +'</div>');
+				accord_count++;
+			});
+        });
+    </script>
+<script src="js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+    <div class="header row"></div>
+
+  <div class="content">
+  	<div class="navbar"></div>
+    <table class="table" id="emp_table">
+    <thead>
+      <tr>
+        <th scope="col">Add</th>
+        <th scope="col">Member</th>
+        <th scope="col">Ongoing projects</th>
+        <th scope="col">Earliest Dateline</th>
+        <th scope="col">Skills</th>
+      </tr>
+      </thead>
+      <tr>
+      	<td><i class="icon-plus"></i></td>
+        <td>Jane</td>
+        <td><a class="btn btn-link">0</a></td>
+        <td>NA</td>
+        <td>Windows System Test <br/> Linux System Test <br/> Windows Server Configuration </td>
+      </tr>
+      <tr>
+      	<td><i class="icon-plus"></i></td>
+        <td>Tom</td>
+        <td><a id="ongoing_proj" class="btn btn-link" rel="popover" data-content="Project A" data-original-title="Ongoing Projects:">1</a></td>
+        <td>23 Mar 2013</td>
+        <td>Windows System Test <br/> Linux System Test</td>
+      </tr>
+      <tr>
+      	<td><i class="icon-plus"></i></td>
+        <td>Mary</td>
+        <td><a id="ongoing_proj" class="btn btn-link" rel="popover" data-content="Project A <br/> Project B" data-original-title="Ongoing Projects:">2</a></td>
+        <td>2 Apr 2013</td>
+        <td>Linux System Test <br/> Windows Server Configuration</td>
+      </tr>
+      <tfoot>
+      <tr>
+        <th scope="col">Add</th>
+        <th scope="col">Member</th>
+        <th scope="col">Ongoing projects</th>
+        <th scope="col">Earliest Dateline</th>
+        <th scope="col">Skills</th>
+      </tr>
+      </tfoot>
+    </table><br/><br/>
+    <a class="btn btn-success" id="next_btn">Next</a>
+    <div class="task_wrap" style="display:none;">
+            <legend>Tasks Allocation</legend>
+            <div class="row control-group">
+            	<div class="span7">
+            		<div class="accordion" id="accordion2">
+					  <div class="accordion-group">
+					    <div class="accordion-heading">
+					      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#task1">
+					        Task #1:
+					      </a>
+					    </div>
+					    <div id="task1" class="accordion-body collapse in">
+					      <div class="accordion-inner">
+					        <label for="task_name">Task Name:</label>
+					        <input type="text" id="task_name"/>
+					        <div class="row">
+					        	<div class="span2">
+							        <label for="start_date">Start Date:</label>
+			                        <input type="text" id="start_date" class="input-medium"/>
+		                        </div>
+		                        <div class="span2">
+							        <label for="end_date">End Date:</label>
+			                     	<input type="text" id="end_date" class="input-medium"/>
+		                     	</div>
+	                     	</div>
+					        <label for="end_date">Hours:</label>
+	                     	<input type="number" id="hours" class="input-small"/>
+					        <label for="members">Who's responsible?</label>
+	                    	<input type="text" id="members" class="input-xlarge"/>
+					      </div>
+					    </div>
+					  </div>
+					  <div class="accordion-group">
+					    <div class="accordion-heading">
+					      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#task2">
+					        Task #2:
+					      </a>
+					    </div>
+					    <div id="task2" class="accordion-body collapse">
+					      <div class="accordion-inner">
+					        <label for="task_name">Task Name:</label>
+					        <input type="text" id="task_name"/>
+					        <div class="row">
+					        	<div class="span2">
+							        <label for="start_date">Start Date:</label>
+			                        <input type="text" id="start_date" class="input-medium"/>
+		                        </div>
+		                        <div class="span2">
+							        <label for="end_date">End Date:</label>
+			                     	<input type="text" id="end_date" class="input-medium"/>
+		                     	</div>
+	                     	</div>
+					        <label for="end_date">Hours:</label>
+	                     	<input type="number" id="hours" class="input-small"/>
+					        <label for="members">Who's responsible?</label>
+	                    	<input type="text" id="members" class="input-xlarge"/>
+					      </div>
+					    </div>
+					  </div>
+					</div>
+	                <a class="btn btn-link" id="add_task">+ Add Task</a>
+                </div>
+                <div class="span2" id="emp_list">
+                	<i>Employee List:</i>
+                	<ul>
+                    <li>Lydia</li>
+                    <li>Yinglin</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row control-group">
+	            <div class="span5">
+		            <a class="btn" id="prev_btn">Prev</a>
+		            <button type="submit" class="btn btn-success">Create Project</button>
+	            </div>
+            </div>
+    </div>
+  </div>
+  <div class="footer">
+    <p>Copyright 2010-2013 PricewaterhouseCoopers. All rights reserved. </p>
+    <!-- end .footer --></div>
+  <!-- end .container --></div>
+</body>
+</html>

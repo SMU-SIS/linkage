@@ -1,13 +1,85 @@
 #login_logo {
-	background: url(../img/pwc_logo.jpg) center no-repeat;
+	background: url(../img/pwc_logo.png) center no-repeat;
 	margin: auto;
-	height: 160px;
+	height: 120px;
 	width: 156px;
 }
+.msg_box{
+	padding:5px;
+}
+.base_logo{
+	position:absolute;
+	margin-top:275px;
+	width:80px;
+	height:75px;
+	background:transparent url(../img/pwc-base-logo.gif) 0 0 no-repeat;
+}
+.feather{
+	position:absolute;
+	display:none;
+	-moz-opacity: 0.8;
+	opacity: 0.8;
+	filter: alpha(opacity=80);
+}
+#f1{
+	left:69px;
+	bottom:75px;
+	width:440px; 
+	height:250px;
+	background-color:#f4bf29;
+}
+#f2{
+	left:69px;
+	bottom:75px;
+	width:370px; 
+	height:265px; 
+	background-color:#ee9c34;
+}
+#f3{
+	left:69px;
+	bottom:75px;
+	width:470px; 
+	height:170px; 
+	background-color:#f3bf8c;
+}
+#f4{
+	left:69px;
+	bottom:75px;
+	width:495px; 
+	height:90px; 
+	background-color:#e669a2;
+}
+#f5{
+	left:69px;
+	bottom:75px;
+	width:275px; 
+	height:275px; 
+	background-color:#c14302;
+}
+#f1, #f2, #f3, #f4, #f5 { display: block; }
 #login_center {
-	margin: auto;
-	height: 380px;
-	width: 350px;
+	margin: 50px auto;
+	height: 300px;
+	width: 430px;
+}
+#login_center form{
+	position: absolute;
+	z-index: 5;
+	margin:40px 0 0 80px;
+}
+#login_center .checkbox{
+	margin-left:30px;
+}
+#login_center .btn{
+	width:220px;
+}
+@media (max-width: 767px){
+	#login_center .btn{
+		width:165px;
+	}
+	#f1, #f2, #f3, #f4, #f5{
+		width:220px; 
+	}
 }
 .noti_icon{
 	list-style:none;
@@ -19,7 +91,7 @@
 .noti_icon a{
 	cursor:pointer;
 	margin-left:5px;
-	padding:6px 3px 3px;
+	padding:6px 3px 14px;
 }
 .noti_icon a:hover{
 	cursor:pointer;
@@ -39,9 +111,21 @@
 	font-weight: bold;
 	margin-left:-5px;
 }
+.icon-globe-large, .icon-envelope-large, .icon-cogwheel-large{
+	width: 25px!important;
+	height:25px!important;
+}
+.icon-globe-large{
+	background: url("../img/glyphicons_globe.png") center no-repeat!important;
+}
+.icon-envelope-large{
+	background: url("../img/glyphicons_envelope.png") center no-repeat!important;
+}
+.icon-cogwheel-large{
+	background: url("../img/glyphicons_cogwheel.png") center no-repeat!important;
+}
 
 body {
-/*	background-color: #42413C; */
 	margin: 0;
 	padding: 0;
 }
@@ -59,7 +143,7 @@ ul, ol, dl {
 }
 
 .logo{
-	background: url(../img/pwc_logo.jpg) left no-repeat;
+	background: url(../img/pwc_logo.png) left no-repeat;
 	padding-top:120px;
 }
 
@@ -102,22 +186,7 @@ ul, ol, dl {
 	border: 1px solid #555555;
 	border-radius:3px;
 	height:150px;
-	overflow:scroll;
+	overflow-y:scroll;
 }
 
-/* Chevrons */
-.icon-remove-right {
-  float: right;
-  margin-top: 2px;
-  margin-right: -6px;
-  opacity:0.5;
-}
 
-.icon-remove:hover{
-	opacity:0.9;
-}
-
-.report_tabs{
-	width:26%;
-	word-break:break-all;
-}

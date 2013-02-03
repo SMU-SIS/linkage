@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PWC Linkage</title>
+<link href="css/main.css" rel="stylesheet" type="text/css">
+<link href="css/gantt.css" rel="stylesheet" type="text/css">
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css">
+<link href="css/bootstrap-responsive.css" rel="stylesheet" type="text/css">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+    <script src="js/include.js"></script>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+
+<div class="container">
+  <div class="header row"></div>
+
+  <div class="content">
+    <div class="navbar"></div>
+    <figure class="gantt">
+      <figcaption>All Projects</figcaption>
+      <aside>
+        <ul class="gantt-labels" style="margin-top: 71px">
+          <li class="gantt-label"><strong style="line-height: 35px; height: 35px">Project 1</strong></li>
+          <li class="gantt-label"><strong style="line-height: 35px; height: 35px">Project 2</strong></li>
+          <li class="gantt-label"><strong style="line-height: 35px; height: 35px">Project 3</strong></li>
+          <li class="gantt-label"><strong style="line-height: 35px; height: 35px">Project 4</strong></li>
+          <li class="gantt-label"><strong style="line-height: 35px; height: 35px">Project 5</strong></li>
+        </ul>
+      </aside>
+      <section class="gantt-data">
+        <header>
+          <ul class="gantt-months" style="width: 4575px">
+            
+          </ul>
+          <ul class="gantt-days" style="width:4575px">
+            
+          </ul>
+        </header>
+        <ul class="gantt-items" style="width: 4575px">
+          <li class="gantt-item">
+            <ul class="gantt-days">
+            </ul>
+            <span class="gantt-block" style="left: 350px; width: 541px; height: 27px">
+              <strong class="gantt-block-label">22</strong>
+            </span>
+          </li>
+          <li class="gantt-item">
+            <ul class="gantt-days">
+              <%
+              c1.set(year, month, 1);
+              for(int i = 0; i < 120; i++){
+              %>
+              <li class="gantt-day" style="width: 25px">
+                <span style="line-height: 35px; height: 35px"><%=sdf3.format(c1.getTime())%></span>
+              </li>
+              <%    
+                c1.add(Calendar.DATE,1);
+              } %>
+            </ul>
+            <span class="gantt-block" style="left: 400px; width: 441px; height: 27px">
+              <strong class="gantt-block-label">18</strong>
+            </span>
+          </li>
+          <li class="gantt-item">
+            <ul class="gantt-days">
+              <%
+              c1.set(year, month, 1);
+              for(int i = 0; i < 120; i++){
+              %>
+              <li class="gantt-day" style="width: 25px">
+                <span style="line-height: 35px; height: 35px"><%=sdf3.format(c1.getTime())%></span>
+              </li>
+              <%    
+                c1.add(Calendar.DATE,1);
+              } %>
+            </ul>
+            <span class="gantt-block" style="left: 500px; width: 341px; height: 27px">
+              <strong class="gantt-block-label">14</strong>
+            </span>
+          </li>
+          <li class="gantt-item">
+            <ul class="gantt-days">
+              <%
+              c1.set(year, month, 1);
+              for(int i = 0; i < 120; i++){
+              %>
+              <li class="gantt-day" style="width: 25px">
+                <span style="line-height: 35px; height: 35px"><%=sdf3.format(c1.getTime())%></span>
+              </li>
+              <%    
+                c1.add(Calendar.DATE,1);
+              } %>
+            </ul>
+            <span class="gantt-block" style="left: 550px; width: 541px; height: 27px">
+              <strong class="gantt-block-label">22</strong>
+            </span>
+          </li>
+          <li class="gantt-item">
+            <ul class="gantt-days">
+              <%
+              c1.set(year, month, 1);
+              for(int i = 0; i < 120; i++){
+              %>
+              <li class="gantt-day" style="width: 25px">
+                <span style="line-height: 35px; height: 35px"><%=sdf3.format(c1.getTime())%></span>
+              </li>
+              <%    
+                c1.add(Calendar.DATE,1);
+              } %>
+            </ul>
+            <span class="gantt-block" style="left: 675px; width: 491px; height: 27px">
+              <strong class="gantt-block-label">20</strong>
+            </span>
+          </li>
+        </ul>
+      </section>
+    </figure>
+  </div>
+  <div class="footer">
+    <p>Copyright 2010-2013 PricewaterhouseCoopers. All rights reserved. </p>
+    <!-- end .footer --></div>
+  <!-- end .container --></div>
+</body>
+<script type="text/javascript">
+$(document).ready(function(){
+  $("#schedule").addClass("active");
+  var monthList= ["January","February","March","April","May","June","July","August","September","October","November","December"];
+  var dayList = [30,]
+  var d = new Date();
+  var month = d.getMonth();
+  var day = d.getDate();
+  var year = d.getFullYear();
+  for(var i = 0; i < 4 ; i++){
+    var width = daysInMonth(year, month+1) * 25;
+    $("ul.gantt-months").append('<li class="gantt-month" style="width: ' + width + 'px"><strong style="line-height: 35px; height: 35px">' + monthList[month] + '</strong></li>');
+    month++;
+  }
+  month = d.getMonth();
+  d = new Date(year, month, 1);
+  for(var i = 0; i < 120; i++){
+    $("header ul.gantt-days").append('<li class="gantt-day" style="width: 25px"><strong style="line-height: 35px; height: 35px">' + d.getDate() + '</strong></li>');
+    d = new Date(d.getTime() + (24 * 60 * 60 * 1000));
+  }
+  for(var i = 0; i < 120; i++){
+    $(".gantt-item ul.gantt-days").append('<li class="gantt-day" style="width: 25px"><span style="line-height: 35px; height: 35px">' + d.getFullYear() + "-" + d.getMonth() + "-" + d.getDate() + '</span></li>');
+    d = new Date(d.getTime() + (24 * 60 * 60 * 1000));
+  }
+});
+function daysInMonth(year, month) {
+  return new Date(year, month, 0).getDate();
+}
+</script>
+</html>
