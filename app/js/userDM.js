@@ -1,5 +1,3 @@
-'use strict';
-
 //var myApp = angular.module('app', ['ngResource']);
 
 var myApp = angular.module('myApp', ['ngResource','ngMockE2E']);

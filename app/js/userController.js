@@ -1,55 +1,16 @@
-'use strict';
-
 /* Controllers */
 //var myApp = angular.module('app', ['ngResource']);
 
 myApp.controller('MainCtrl', function($scope, $resource) {
-    /*
     $scope.users = $resource('/user').get();
 	//$scope.users = {"count":2,"entities":[{"username": "Peter", "password": "1234"},{"username": "Mary", "password": "1234"}]};
 
     $scope.hasUser = false;
     $scope.auth = "";
 	$scope.newuser = {"fullname": "", "username": "", "password": "", "role": ""};
-	*/
-	$scope.backend_locations = [
-      {url : 'code-comparison.appspot.com', urlName : 'remote backend' },       
-      {url : 'linkagepwc.appspot.com', urlName : 'pwc' },       
-      {url : 'localhost:8081', urlName : 'localhost' } ];
-
-    $scope.showdetails = false;
-    $scope.apikey = "pwc";
-    
-    //Replace this url with your final URL from the SingPath API path. 
-    $scope.remote_url = "localhost:8081";
-    //$scope.remote_url = "linkagepwc.appspot.com";
-    $scope.model = "user";
-    
-    $scope.item = {};
-    $scope.item.data = {"fullname": "Peter Lim",
-                        "username": "peter",
-                        "password": "1234",
-                        "role": "manager"
-                       };
-    
-    //resource calls are defined here
-
-    $scope.Model = $resource('http://:remote_url/:apikey/:model_type/:id',
-                            {},{'get': {method: 'JSONP', isArray: false, params:{callback: 'JSON_CALLBACK'}}
-                               }
-                        );
     $scope.checkPassword = function(){
-        $(".msg_box").removeClass("alert");
-        $(".signin_btn").addClass("disabled");
-        var data = {'remote_url':$scope.remote_url,
-              'model_type':$scope.model,
-              'apikey':$scope.apikey
-             }     
-      	$scope.Model.get(data,
-            function(response) { 
-              $scope.users = response;
-              alert($scope.users.toString())
-            });  
+            $(".msg_box").removeClass("alert");
+            $(".signin_btn").addClass("disabled");
     	for(x=0; x < $scope.users.count;x++){
 	    	aUser = $scope.users.entities[x];
 	    	if( $scope.user.username == aUser.username){
