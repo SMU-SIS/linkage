@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" ng-app="myApp">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +11,39 @@
 <style type="text/css" title="currentStyle">
 			@import "css/demo_table.css";
 		</style>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.1/angular.js"></script>
+    
+    <script language="javascript" type="text/javascript">
+      angular.module('myApp', []);
+	  
+	  function MyController($scope){
+        $scope.newMessage = {name:"gamma", tasks:"0", dead_line:"01/01/2013", skills: ["windows system test", "MAC system test", "Oracle sercurity test"]};
+        $scope.messages = ["What's up?", "Yo!"]; 
+        $scope.avail_members =	[
+						{name:"alpha", tasks:"0", dead_line:"01/01/2013", skills: ["windows system test", "MAC system test", "Oracle sercurity test"]},
+						{name:"beta", tasks:"1", dead_line:"02/02/2013", skills: ["Linux system test", "Wamp server test", "windows system test"]},
+						{name:"gamma", tasks:"2", dead_line:"03/03/2013", skills: ["Mac sercurity test", "Mac system test"]}
+						];
+		
+		$scope.assigned_members =[];
+		
+		$scope.go = function(member){
+			$scope.assigned_members.push(member);
+			var count = 0;
+			angular.forEach($scope.avail_members, function(avail_member) {
+				if(member.name == avail_member.name){
+					$scope.avail_members.splice(count,1);
+				}
+				count++;
+			});
+		}
+		
+        $scope.add = function(){
+          $scope.assigned_members.push($scope.newMessage);
+        };
+      }
+    </script>
+	
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 	<script type="text/javascript" language="javascript" src="js/jquery.dataTables.js"></script>
     <script src="js/include.js"></script>
@@ -62,9 +95,28 @@
         });
     </script>
 <script src="js/bootstrap.min.js"></script>
+
+
 </head>
 
-<body>
+<body ng-controller="MyController">
+
+<!--shows members in the array: for debugging-->
+
+<!--
+    $availble member list
+    <ul>
+      <li ng-repeat="entity in avail_members">
+          <pre>{{entity}}</pre>
+      </li>
+    </ul>
+	$assigned member list
+    <ul>
+      <li ng-repeat="entity in assigned_members">
+          <pre>{{entity}}</pre>
+      </li>
+    </ul>
+-->
 
 <div class="container">
     <div class="header row"></div>
@@ -81,27 +133,13 @@
         <th scope="col">Skills</th>
       </tr>
       </thead>
-      <tr>
-      	<td><i class="icon-plus"></i></td>
-        <td>Jane</td>
-        <td><a class="btn btn-link">0</a></td>
-        <td>NA</td>
-        <td>Windows System Test <br/> Linux System Test <br/> Windows Server Configuration </td>
-      </tr>
-      <tr>
-      	<td><i class="icon-plus"></i></td>
-        <td>Tom</td>
-        <td><a id="ongoing_proj" class="btn btn-link" rel="popover" data-content="Project A" data-original-title="Ongoing Projects:">1</a></td>
-        <td>23 Mar 2013</td>
-        <td>Windows System Test <br/> Linux System Test</td>
-      </tr>
-      <tr>
-      	<td><i class="icon-plus"></i></td>
-        <td>Mary</td>
-        <td><a id="ongoing_proj" class="btn btn-link" rel="popover" data-content="Project A <br/> Project B" data-original-title="Ongoing Projects:">2</a></td>
-        <td>2 Apr 2013</td>
-        <td>Linux System Test <br/> Windows Server Configuration</td>
-      </tr>
+		<tr ng-repeat = "entity in avail_members">		
+			<td><i class="icon-plus" ng-click="go(entity)"></td>
+			<td>{{entity.name}}</td>
+			<td><a class="btn btn-link">{{entity.tasks}}</a></td>
+			<td>{{entity.dead_line}}</td>
+			<td ng-repeat = "skill in entity.skills">{{skill}}<br/></td>
+		</tr>
       <tfoot>
       <tr>
         <th scope="col">Add</th>
