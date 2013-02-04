@@ -19,7 +19,10 @@
       function MyController($scope){
         $scope.username = localStorage.getItem("username");
         $scope.fullname = localStorage.getItem("fullname");
+        $scope.viewname = localStorage.getItem("viewname");
         $scope.role = readCookie("user");
+        
+        
       }
     </script>
 <link rel="icon" href="favicon.ico" type="image/x-icon">
@@ -27,26 +30,90 @@
 </head>
 
 <body ng-controller="MyController">
+    
 
 <div class="container">
   <div class="header row"></div>
 
   <div class="content">
   	<div class="navbar"></div>
-    <h4 class="greeting">Hello {{username}}, welcome to LinkAge. </h4>
-
+         
+           
+    <h4 class="greeting">Hello {{fullname}}, welcome to LinkAge. </h4>
+    
     <div class="row">
          <fieldset class="noti_sidebar span3 hidden-phone">
          	  <legend>Personal Profile:</legend>
-                  Name: {{fullname}}<br/>
+                   <div class="left-column">
+                   
+                  Name:{{viewname}}<br/> 
 	          Position: {{role}}<br/>
 	          Skillset: 
 	          <ul>
 	          	<li>Perform Windows Configuration</li>
 	          	<li>Window Server Testing</li>
 	          </ul>
-	          <a class="btn pull-right"><i class="icon-edit"></i>  Edit</a>
+                  
+                	 
+                  <p><a class="btn pull-right" href="#editdetails" data-toggle="modal"><i class="icon-edit"></i>  Edit Info</a> 
+                      <a class="btn pull-left" href="#changepassword" data-toggle="modal">  <i class="icon-user"></i>  Change Password</a></p>
+                 
+                     
+                      <div class="modal fade" id="editdetails">
+                           <h3>Edit Details</h3>
+                      <form>
+			    <fieldset class="ui-helper-reset">
+			      <label>Name: </label>
+                              <input type="text" value= {{fullname}} class="span2 input_issue" id="appendedDropdownButton"><br>
+                              <label>Skillset:</label>
+                              <textarea rows="3"> Perform Windows Configuration
+                              </textarea>
+                            <div class="modal-footer">
+                                <a href="#" class="btn" data-dismiss="modal">Close</a>
+                                <a href="#" class="btn btn-primary">Save Changes</a>
+                            </div>
+                  </div>
+                  <div class="modal fade" id="changepassword">
+                           <h3>Edit Details</h3>
+                      <form>
+			    <fieldset class="ui-helper-reset">
+			      <label>Enter old Password: </label>
+                              <input type="password"><br>
+                              <label>Enter new Password: </label>
+                              <input type="password"><br>
+                              <label>Re-enter new Password: </label>
+                              <input type="password"><br>
+                           <div class="modal-footer">
+                                <a href="#" class="btn" data-dismiss="modal">Close</a>
+                                <a href="#" class="btn btn-primary">Save Changes</a><br>
+                            </div>
+                  </div>
+                   </div>
+                  
+                  
+                  <div class="left-column">
+                  
+                  
+			 
+                  
+                  <div class="modal fade" id="changepassword">
+                           <h3>Edit Details</h3>
+                      <form>
+			    <fieldset class="ui-helper-reset">
+			      <label>Enter old Password: </label>
+                              <input type="password"><br>
+                              <label>Enter new Password: </label>
+                              <input type="password"><br>
+                              <label>Re-enter new Password: </label>
+                              <input type="password"><br>
+                           <div class="modal-footer">
+                                <a href="#" class="btn" data-dismiss="modal">Close</a>
+                                <a href="#" class="btn btn-primary">Save Changes</a>
+                            </div>
+                  </div>
+                   </div>
          </fieldset>
+                          
          <div class="span8 schedule_summary">
             <div class="tabbable">
 			  <ul class="nav nav-tabs">
@@ -58,14 +125,52 @@
 			      <table class="table table-bordered">
 		         	  <thead>
 		         	  	<tr>
+                                                
+                                               
 			         	  	<th class="proj_col" style="width: 29%"></th>
-			         	  	<th style="width: 11%">Today</th>
-			         	  	<th style="width: 10%">19/01</th>
-			         	  	<th style="width: 10%">20/01</th>
-			         	  	<th style="width: 10%">21/01</th>
-			         	  	<th style="width: 10%">21/01</th>
-			         	  	<th style="width: 10%">22/01</th>
-			         	  	<th style="width: 10%">23/01</th>
+			         	  	<th style="width: 10%">Today</th>
+			         	  	<th style="width: 10%">
+                                                    <script type="text/javascript">
+                                                    var mydate= new Date()
+                                                    mydate.setDate(mydate.getDate()+1)
+                                                    document.write(+mydate.getDate()+"/"+(mydate.getMonth()+1)+"/"+mydate.getFullYear());
+                                                    </script>                                                                                                       
+                                                </th>
+                                                <th style="width: 10%">
+                                                <script type="text/javascript">
+                                                    var mydate= new Date()
+                                                    mydate.setDate(mydate.getDate()+2)
+                                                    document.write(+mydate.getDate()+"/"+(mydate.getMonth()+1)+"/"+mydate.getFullYear());
+                                                    </script>   
+                                                </th>
+			         	  	<th style="width: 10%">
+                                                    <script type="text/javascript">
+                                                    var mydate= new Date()
+                                                    mydate.setDate(mydate.getDate()+3)
+                                                    document.write(+mydate.getDate()+"/"+(mydate.getMonth()+1)+"/"+mydate.getFullYear());
+                                                    </script>    
+                                                </th>
+			         	  	<th style="width: 10%">
+                                                    <script type="text/javascript">
+                                                    var mydate= new Date()
+                                                    mydate.setDate(mydate.getDate()+4)
+                                                    document.write(+mydate.getDate()+"/"+(mydate.getMonth()+1)+"/"+mydate.getFullYear());
+                                                    </script>
+                                                </th>
+			         	  	<th style="width: 10%">
+                                                    <script type="text/javascript">
+                                                    var mydate= new Date()
+                                                    mydate.setDate(mydate.getDate()+5)
+                                                    document.write(+mydate.getDate()+"/"+(mydate.getMonth()+1)+"/"+mydate.getFullYear());
+                                                    </script>
+                                                </th>
+			         	  	<th style="width: 10%">
+                                                    <script type="text/javascript">
+                                                    var mydate= new Date()
+                                                    mydate.setDate(mydate.getDate()+6)
+                                                    document.write(+mydate.getDate()+"/"+(mydate.getMonth()+1)+"/"+mydate.getFullYear());
+                                                    </script>
+                                                </th>
 		         	  	</tr>
 		         	  </thead>
 		              <tr>
@@ -99,6 +204,7 @@
 		                <td class="marked"><i class="icon-briefcase"></i></td>
 		              </tr>
 		            </table>
+                                <p><a href="my_schedule.jsp" class="btn pull-right"><i class="icon-circle-arrow-right" ></i>  Go To My Schedule</a></p>
 			    </div>
 			    <div class="tab-pane" id="tab2">
 			      <p>No History Projects.</p>
