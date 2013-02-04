@@ -1,247 +1,53 @@
- <!doctype html>
-<html ng-app="myApp">
-     <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!doctype html>
+<html lang="en" ng-app="myApp">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PWC</title>
+    <link href="css/main.css" rel="stylesheet" type="text/css">
+    <link href="css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link href="css/bootstrap-responsive.css" rel="stylesheet" type="text/css">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
-     <script src="js/bootstrap.min.js"></script>
-     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular.min.js"></script>
-     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular-resource.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular-resource.min.js"></script>
     <script src="lib/angular/angular-mocks.js"></script>
-   <!-- <script src="js/userDM.js"></script> -->
+    <script src="js/userDM.js"></script>
     <script src="js/userController.js"></script>
-    <script type="text/javascript">
-    angular.module('myApp', ['ngResource']);
+</head>
 
-function BackendController($scope,$resource){
-    $scope.users = $resource('/user').get();
-    //$scope.users = {"count":2,"entities":[{"username": "Peter", "password": "1234"},{"username": "Mary", "password": "1234"}]};
-    $scope.backend_locations = [
-          {url : 'code-comparison.appspot.com', urlName : 'remote backend' },       
-          {url : 'linkagepwc.appspot.com', urlName : 'pwc' },       
-          {url : '127.0.0.1:8080', urlName : 'localhost' } ];
-
-    $scope.showdetails = false;
-    $scope.apikey = "pwc";
-    
-    //Replace this url with your final URL from the SingPath API path. 
-    $scope.remote_url = "localhost:8080";
-    //$scope.remote_url = "linkagepwc.appspot.com";
-    $scope.model = "user";
-    $scope.waiting = "Ready";
-    
-    $scope.item = {};
-    $scope.item.data = {"fullname": "Lydia Liu",
-                        "username": "lydia",
-                        "password": "123",
-                        "role": "manager"
-                       };
-    
-    //resource calls are defined here
-
-    $scope.Model = $resource('http://:remote_url/:apikey/:model_type/:id',
-                            {},{'get': {method: 'JSONP', isArray: false, params:{callback: 'JSON_CALLBACK'}}
-                               }
-                        );
-
-    $scope.update = function(id){
-      $scope.UpdateResource = $resource('http://:remote_url/:apikey/:model/:id', 
-                    {"remote_url":$scope.remote_url,"apikey":$scope.apikey,"model":$scope.model, "id":id }, 
-                    {'update': { method: 'PUT',    params: {} }});
-      
-      var item = new $scope.UpdateResource($scope.item.data);
-      $scope.waiting = "Loading";
-      item.$update(function(response) { 
-              $scope.item = response;
-              $scope.list();
-              $scope.waiting = "Ready";
-            });
-    };
-    
-    $scope.add = function(){
-      $scope.SaveResource = $resource('http://:remote_url/:apikey/:model', 
-                    {"remote_url":$scope.remote_url,"apikey":$scope.apikey,"model":$scope.model}, 
-                    {'save': { method: 'POST',    params: {} }});
-   
-      $scope.waiting = "Loading";
-      var item = new $scope.SaveResource($scope.item.data);
-      $scope.item = item.$save(function(response) { 
-              $scope.item = response;
-              $scope.list();
-              $scope.waiting = "Ready";
-            }); 
-    };
-    
-    $scope.list = function(){
-      var data = {'remote_url':$scope.remote_url,
-              'model_type':$scope.model,
-              'apikey':$scope.apikey
-             }
-      $scope.waiting = "Updating";       
-      $scope.Model.get(data,
-            function(response) { 
-              $scope.items = response;
-              $scope.waiting = "Ready";
-            });  
-    };
-            
-    $scope.load = function(id){
-      var data = {'remote_url':$scope.remote_url,
-              'model_type':$scope.model,
-              'apikey':$scope.apikey, 
-              'id': id
-            }
-      $scope.waiting = "Loading";
-      $scope.Model.get(data, 
-          function(response){   
-              $scope.item = response;
-              $scope.item_data = $scope.item.data;
-              $scope.waiting = "Ready";  
-          });        
-    };
-    
-    $scope.delete = function(id){
-      var data = {'remote_url':$scope.remote_url,
-              'model_type':$scope.model,
-              'apikey':$scope.apikey, 
-              'id': id
-            }
-      $scope.waiting = "Deleting";      
-      $scope.Model.remove(data, 
-          function(response){
-              $scope.waiting = "Ready";
-              $scope.list();
-          });
-    };
-    //To add key/value pairs when creating new objects
-    $scope.add_key_to_item = function(){
-      $scope.item.data[$scope.newItemKey] = $scope.newItemValue;
-      $scope.newItemKey = "";
-      $scope.newItemValue = "";
-    };
-    
-    $scope.get_metadata = function(){
-      var data = {'remote_url':$scope.remote_url,
-              'model_type':"metadata",
-              'apikey':$scope.apikey
-             }
-      $scope.waiting = "Updating";       
-      $scope.Model.get(data,
-            function(response) { 
-              $scope.metadata = response;
-              $scope.waiting = "Ready";
-            });  
-    };
-    
-    $scope.log_event = function(message){
-      var data = {'remote_url':$scope.remote_url,
-              'model_type':"log",
-              'apikey':$scope.apikey, 
-              'obj': JSON.stringify({"message":message})
-            }
-      $scope.Model.get(data, 
-          function(response){
-              $scope.last_log = response;
-          });
-    
-    };
-    $scope.list();
-        
-    $scope.hasUser = false;
-    $scope.auth = "";
-    $scope.newuser = {"fullname": "", "username": "", "password": "", "role": ""};
-    $scope.checkPassword = function(){
-            $(".msg_box").removeClass("alert");
-            $(".signin_btn").addClass("disabled");
-        for(x=0; x < $scope.users.count;x++){
-            aUser = $scope.users.entities[x];
-            if( $scope.user.username == aUser.username){
-                $scope.hasUser = true;
-                $scope.auth = aUser.password;
-                $scope.user.role = aUser.role;
-                $scope.user.fullname = aUser.fullname;
-                break;
-            }
-        }
-        if($scope.hasUser){
-            if($scope.user.password != $scope.auth){
-                $scope.alertMessage = "Invaid password.";
-                $("div.msg_box").addClass("alert");
-                $(".signin_btn").removeClass("disabled");
-            }else{
-                if($("#rmb_user").attr("checked")=="checked"){
-                    createCookie("user", $scope.user.role, 30);
-                }else{
-                    createCookie("user", $scope.user.role);
-                }
-                localStorage.setItem("username", $scope.user.username);
-                localStorage.setItem("fullname", $scope.user.fullname);
-                //window.location.href = 'profile.html';
-                add();
-            }
-        }else{
-            $scope.alertMessage = "Invaid Username.";
-            $("div.msg_box").addClass("alert");
-            $(".signin_btn").removeClass("disabled");
-        }
-    }
-
-    $scope.signup = function(){
-        for(x=0; x < $scope.users.count;x++){
-            aUser = $scope.users.entities[x];
-            if( $scope.newuser.username == aUser.username){
-                $scope.hasUser = true;
-                break;
-            }
-        }
-        if($scope.hasUser){
-            $scope.signup_error_username = "The username has been taken.";
-        }else if($scope.newuser.password && $scope.newuser.password.length < 8){
-            $scope.signup_error_password = "At least 8 letters long.";
-        }else if($scope.newuser.c_password != $scope.newuser.password){
-            $scope.signup_error_c_password = "These passwords don't match.";
-        }else{
-            $scope.signup_error_username = "";
-            $scope.signup_error_password = "";
-            $(".msg_box").removeClass("alert");
-            $(".signin_btn").addClass("disabled");
-            $scope.addUser();
-        }
-    }
-
-    $scope.signup = function(){
-
-    }
-}
- </script>
- </head>
- 
-<body>
-<body ng-controller="BackendController">
- <noscript>
- Please enable javascript to use this application.
- </noscript>
-        <div id="f4" class="feather">&nbsp;</div>
-        <div id="f5" class="feather">&nbsp;</div>
-    </div>
-    <form name="form1" method="post" class="form-horizontal" ng-submit="checkPassword()">
-         <div class="control-group">
-            <div class="input-prepend">
-                <span class="add-on"><i class="icon-user"></i></span>
-               <input type="text" id="inputUsername" placeholder="Username" ng-model="user.username" required>
-            </div>
+<body ng-controller="MainCtrl">
+<noscript>
+Please enable javascript to use this application.
+</noscript>
+<div class="center" id="login_center">
+  <!-- <div class="logo" id="login_logo"></div> -->
+  	<div class="base_logo feathersOut">
+		<div class="logo-icon">&nbsp;</div>
+		<div id="f1" class="feather">&nbsp;</div>
+		<div id="f2" class="feather">&nbsp;</div>
+		<div id="f3" class="feather">&nbsp;</div>
+		<div id="f4" class="feather">&nbsp;</div>
+		<div id="f5" class="feather">&nbsp;</div>
+	</div>
+	 <form name="form1" method="post" class="form-horizontal" ng-submit="checkPassword()">
+        <div class="control-group">
+	       	<div class="input-prepend">
+		  		<span class="add-on"><i class="icon-user"></i></span>
+		  		<input type="text" id="inputUsername" placeholder="Username" ng-model="user.username" required>
+			</div>
+		</div>
+        <div class="control-group">
+	        <div class="input-prepend">
+	            <span class="add-on"><i class="icon-lock"></i></span>
+	            <input type="password" id="inputPassword" placeholder="Password" ng-model="user.password" required>
+	        </div>
         </div>
-         <div class="control-group">
-            <div class="input-prepend">
-                <span class="add-on"><i class="icon-lock"></i></span>
-               <input type="password" id="inputPassword" placeholder="Password" ng-model="user.password" required>
-            </div>
-         </div>
-         <div class="control-group">
-             <label class="checkbox">
-                 <input type="checkbox" id="rmb_user"> Remember me
-             </label>
+        <div class="control-group">
+            <label class="checkbox">
+                <input type="checkbox" id="rmb_user"> Remember me
+            </label>
             <div class="msg_box"><font class="text-error">{{alertMessage}}</font></div>
             <button class="btn btn-primary signin_btn">Start Working!</button><br/>
             <a onclick="register()" class="switch">Don't have a Linkage Account?</a>
@@ -275,19 +81,65 @@ function BackendController($scope,$resource){
         <div class="control-group">
             <button class="btn btn-primary signin_btn">Join Linkage!</button><br/>
             <a onclick="signin()" class="switch">Sign in with existing Account?</a>
-          </div>
-          
-     </form>
-     
- </div>
-</body>
- <script type="text/javascript">
-     function createCookie(c_name,value,exdays) {
+         </div>
          
-     }
-    $(document).ready(function(){
-       if(readCookie("user") != null && readCookie("user") != "" && readCookie("user") != "undefined"){
-            window.location = "profile.html";
+    </form>
+    
+</div>
+</body>
+<script type="text/javascript">
+    function createCookie(c_name,value,exdays) {
+        var exdate=new Date();
+        exdate.setDate(exdate.getDate() + exdays);
+        var c_value=escape(value) + ((exdays==null) ? "" : "; expires="+exdate.toUTCString());
+        document.cookie=c_name + "=" + c_value;
+    }
+    function readCookie(c_name) {
+        var i,x,y,ARRcookies=document.cookie.split(";");
+        for (i=0;i<ARRcookies.length;i++)
+        {
+            x=ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
+            y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
+            x=x.replace(/^\s+|\s+$/g,"");
+            if (x==c_name)
+            {
+                return unescape(y);
+            }
         }
-    });
- </script>
+    }
+	$(document).ready(function(){
+		if(readCookie("user") != null && readCookie("user") != "" && readCookie("user") != "undefined"){
+			window.location = "profile.html";
+		}
+        $(".signin_btn").click(function(){
+            var username = $("#inputUsername").val();
+            var password = $("#inputPassword").val();
+            /*
+            $.ajax({
+                type: "POST",
+                url: "/Linkage/RetrieveUserServlet",
+                data: { userID: username, password: password }
+            }).done(function( msg ) {
+                var userJson = JSON.parse(msg);
+                var valid = userJson.valid;
+                var role = userJson.role;
+                var fullname = userJson.Fullname;
+                if(valid){
+                    if($("#rmb_user").attr("checked")=="checked"){
+                        createCookie("user", role, 30);
+                    }else{
+                        createCookie("user", role);
+                    }
+                    localStorage.setItem("username", username);
+                    localStorage.setItem("fullname", fullname);
+                    window.location.href = 'profile.html';
+                }else{
+                    $(".msg_box").addClass("alert").html("Invalid Username/Password.");
+                    $(".signin_btn").removeClass("disabled");
+                }
+            });
+            */
+        });
+	});
+</script>
+</html>
