@@ -19,12 +19,6 @@
 	  
 	  function BackendController($scope,$resource){
 		
-		$scope.avail_members =	[
-			{name:"alpha", tasks:"0", dead_line:"01/01/2013", skills: ["windows system test", "MAC system test", "Oracle sercurity test"]},
-			{name:"beta", tasks:"1", dead_line:"02/02/2013", skills: ["Linux system test", "Wamp server test", "windows system test"]},
-			{name:"gamma", tasks:"2", dead_line:"03/03/2013", skills: ["Mac sercurity test", "Mac system test"]}
-		];
-		
 		$scope.assigned_members =[];
 		
 		$scope.member_list = {};
@@ -35,12 +29,12 @@
 				"skills":["",""]
 			};
 		
-		$scope.go = function(member){
+		$scope.selectMember = function(member){
 			$scope.assigned_members.push(member);
 			var count = 0;
-			angular.forEach($scope.avail_members, function(avail_member) {
-				if(member.name == avail_member.name){
-					$scope.avail_members.splice(count,1);
+			angular.forEach($scope.items.entities, function(avail_member) {
+				if(member.data.name == avail_member.data.name){
+					$scope.items.entities.splice(count,1);
 				}
 				count++;
 			});
@@ -65,6 +59,7 @@
         $scope.remote_url = "linkagepwc.appspot.com";
         $scope.model = "member";
         $scope.waiting = "Ready";
+
         
         //resource calls are defined here
 
@@ -83,9 +78,11 @@
                 function(response) { 
                   $scope.items = response;
                   $scope.waiting = "Ready";
-                });  
+				  $scope.avail_members = [$scope.items.entities];
+                });
+				
         };
-        
+       
         $scope.list();         
       }
     
@@ -149,12 +146,11 @@
 <body ng-controller="BackendController">
 
 <!--shows members in the array: for debugging-->
-
 <!--
-	$list of entries in member db
-	<ul>
+    $availble member list
+    <ul>
       <li ng-repeat="entity in items.entities">
-		{{entity}}
+          <pre>{{entity}}</pre>
       </li>
     </ul>
 	$assigned member list
@@ -181,7 +177,7 @@
       </tr>
       </thead>
 		<tr ng-repeat = "entity in items.entities">		
-			<td><i class="icon-plus" ng-click="go(entity)"></td>
+			<td><i class="icon-plus" ng-click="selectMember(entity)"></td>
 			<td>{{entity.data.name}}</td>
 			<td><a class="btn btn-link">{{entity.data.tasks}}</a></td>
 			<td>{{entity.data.deadline}}</td>
