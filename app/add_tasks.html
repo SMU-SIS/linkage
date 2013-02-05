@@ -12,20 +12,28 @@
 			@import "css/demo_table.css";
 		</style>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.1/angular.js"></script>
-    
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular-resource.min.js"></script>
+	
     <script language="javascript" type="text/javascript">
-      angular.module('myApp', []);
+      angular.module('myApp', ['ngResource']);
 	  
-	  function MyController($scope){
-        $scope.newMessage = {name:"gamma", tasks:"0", dead_line:"01/01/2013", skills: ["windows system test", "MAC system test", "Oracle sercurity test"]};
-        $scope.messages = ["What's up?", "Yo!"]; 
-        $scope.avail_members =	[
-						{name:"alpha", tasks:"0", dead_line:"01/01/2013", skills: ["windows system test", "MAC system test", "Oracle sercurity test"]},
-						{name:"beta", tasks:"1", dead_line:"02/02/2013", skills: ["Linux system test", "Wamp server test", "windows system test"]},
-						{name:"gamma", tasks:"2", dead_line:"03/03/2013", skills: ["Mac sercurity test", "Mac system test"]}
-						];
+	  function BackendController($scope,$resource){
+		
+		$scope.avail_members =	[
+			{name:"alpha", tasks:"0", dead_line:"01/01/2013", skills: ["windows system test", "MAC system test", "Oracle sercurity test"]},
+			{name:"beta", tasks:"1", dead_line:"02/02/2013", skills: ["Linux system test", "Wamp server test", "windows system test"]},
+			{name:"gamma", tasks:"2", dead_line:"03/03/2013", skills: ["Mac sercurity test", "Mac system test"]}
+		];
 		
 		$scope.assigned_members =[];
+		
+		$scope.member_list = {};
+			$scope.member_list.data = {
+				"name":"",
+				"tasks":"",
+				"dead_line":"",
+				"skills":["",""]
+			};
 		
 		$scope.go = function(member){
 			$scope.assigned_members.push(member);
@@ -38,10 +46,49 @@
 			});
 		}
 		
-        $scope.add = function(){
-          $scope.assigned_members.push($scope.newMessage);
+        $scope.gaEvent = function($event){
+          $scope.clicked = $event.target.name;
+          //Call your own backend to log an event.
+          $scope.log_event($scope.clicked);
         };
+        
+        $scope.backend_locations = [
+          {url : 'code-comparison.appspot.com', urlName : 'remote backend' },       
+          {url : 'linkagepwc.appspot.com', urlName : 'pwc' },       
+          {url : 'localhost:8080', urlName : 'localhost' } ];
+
+        $scope.showdetails = false;
+        $scope.apikey = "pwc";
+        
+        //Replace this url with your final URL from the SingPath API path. 
+        //$scope.remote_url = "localhost:8080";
+        $scope.remote_url = "linkagepwc.appspot.com";
+        $scope.model = "member";
+        $scope.waiting = "Ready";
+        
+        //resource calls are defined here
+
+        $scope.Model = $resource('http://:remote_url/:apikey/:model_type/:id',
+                                {},{'get': {method: 'JSONP', isArray: false, params:{callback: 'JSON_CALLBACK'}}
+                                   }
+                            );
+        
+        $scope.list = function(){
+          data = {'remote_url':$scope.remote_url,
+                  'model_type':$scope.model,
+                  'apikey':$scope.apikey
+                 }
+          $scope.waiting = "Updating";       
+          $scope.Model.get(data,
+                function(response) { 
+                  $scope.items = response;
+                  $scope.waiting = "Ready";
+                });  
+        };
+        
+        $scope.list();         
       }
+    
     </script>
 	
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
@@ -99,15 +146,15 @@
 
 </head>
 
-<body ng-controller="MyController">
+<body ng-controller="BackendController">
 
 <!--shows members in the array: for debugging-->
 
 <!--
-    $availble member list
-    <ul>
-      <li ng-repeat="entity in avail_members">
-          <pre>{{entity}}</pre>
+	$list of entries in member db
+	<ul>
+      <li ng-repeat="entity in items.entities">
+		{{entity}}
       </li>
     </ul>
 	$assigned member list
@@ -133,12 +180,12 @@
         <th scope="col">Skills</th>
       </tr>
       </thead>
-		<tr ng-repeat = "entity in avail_members">		
+		<tr ng-repeat = "entity in items.entities">		
 			<td><i class="icon-plus" ng-click="go(entity)"></td>
-			<td>{{entity.name}}</td>
-			<td><a class="btn btn-link">{{entity.tasks}}</a></td>
-			<td>{{entity.dead_line}}</td>
-			<td ng-repeat = "skill in entity.skills">{{skill}}<br/></td>
+			<td>{{entity.data.name}}</td>
+			<td><a class="btn btn-link">{{entity.data.tasks}}</a></td>
+			<td>{{entity.data.deadline}}</td>
+			<td ng-repeat = "skill in entity.data.skills">{{skill}}<br/></td>
 		</tr>
       <tfoot>
       <tr>
@@ -151,7 +198,7 @@
       </tfoot>
     </table><br/><br/>
     <a class="btn btn-success" id="next_btn">Next</a>
-    <div class="task_wrap" style="display:none;">
+    <div class="task_wrap" style="display;">
             <legend>Tasks Allocation</legend>
             <div class="row control-group">
             	<div class="span7">
