@@ -284,7 +284,7 @@ a:hover {
   margin-left: 20px;
 }
 
-.container,
+.container, .footer,
 .navbar-static-top .container,
 .navbar-fixed-top .container,
 .navbar-fixed-bottom .container {
@@ -613,7 +613,7 @@ a:hover {
   float: right;
 }
 
-.container {
+.container, .footer {
   margin-right: auto;
   margin-left: auto;
   *zoom: 1;
@@ -5284,7 +5284,7 @@ input[type="submit"].btn.btn-mini {
   left: 0;
   z-index: 1010;
   display: none;
-  width: 236px;
+  width: 300px;
   padding: 1px;
   text-align: left;
   white-space: normal;
@@ -5301,7 +5301,9 @@ input[type="submit"].btn.btn-mini {
      -moz-background-clip: padding;
           background-clip: padding-box;
 }
-
+.popover-inner {
+  width: 300px;
+}
 .popover.top {
   margin-top: -10px;
 }
@@ -5841,6 +5843,13 @@ a.badge:hover {
 
 .accordion-heading {
   border-bottom: 0;
+  background-color: #fafafa;
+  background-image: -moz-linear-gradient(top, #ffffff, #f2f2f2);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#f2f2f2));
+  background-image: -webkit-linear-gradient(top, #ffffff, #f2f2f2);
+  background-image: -o-linear-gradient(top, #ffffff, #f2f2f2);
+  background-image: linear-gradient(to bottom, #ffffff, #f2f2f2);
+  background-repeat: repeat-x;
 }
 
 .accordion-heading .accordion-toggle {

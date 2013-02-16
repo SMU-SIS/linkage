@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" lang="en" xmlns:ng="http://angularjs.org" ng-app>
+<html lang="en" ng-app="myApp">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,9 +11,12 @@
     <link href="css/report.css" rel="stylesheet" type="text/css">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.1/angular.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular-resource.min.js"></script>
     <script src="js/include.js"></script>
     <!-- Skin CSS file -->
     <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.9.0/build/assets/skins/sam/skin.css">
+    <link rel="stylesheet" type="text/css" href="css/table-editor.css">
     <!-- Utility Dependencies -->
     <script src="http://yui.yahooapis.com/2.9.0/build/yahoo-dom-event/yahoo-dom-event.js"></script> 
     <script src="http://yui.yahooapis.com/2.9.0/build/element/element-min.js"></script> 
@@ -23,11 +26,11 @@
     <script src="http://yui.yahooapis.com/2.9.0/build/button/button-min.js"></script>
     <!-- Source file for Rich Text Editor-->
     <script src="http://yui.yahooapis.com/2.9.0/build/editor/editor-min.js"></script>
+    <script src="js/table-editor.js" language="javascript" type="text/javascript"></script>
 
 </head>
 
-<body class="yui-skin-sam">
-
+<body class="yui-skin-sam" ng-controller="BackendController">
 <div class="container">
     <div class="header row"></div>
 
@@ -50,85 +53,33 @@
               <div class="tab-content">
               	<div class="tab-pane active" id="executiveSummary">
                     <h2>1. Executive Summary</h2>
-                    <textarea name="msgpost1" id="msgpost1">
-                        We have completed the IT Security Review on ePortal System for Authority of Singapore (“AOS” or “Client”). Our services were performed from 25 May 2012 to 30 October 2012 in accordance with our proposal dated 27 April 2012.
-                        <br /><br />
-                        Scope of Work <br />
-                        During the course of our work, we performed the following: <br />
-                        1.	Security Review <br />
-                        2.	Review of Security Policy, Standard and Guidelines <br />
-                        3.	Security Testing <br />
-                    </textarea><br />
-                    <button class="btn save_btn">Save</button>
+                    <textarea name="msgpost1" id="msgpost1">{{project.data.summary}}</textarea><br />
+                    <button type="submit" class="btn save_btn" ng-click="update(project.id)">Save</button>
                 </div>
                 
               	<div class="tab-pane" id="scopeOfWork">
                     <h2>2. Scope of Work</h2>
-                    <textarea name="msgpost2" id="msgpost2">
-                       Review of Application & Network Infrastructure Design <br/>                    
-                        We have conducted a review of the ePortal application design and network infrastructure design. We have assessed the following controls during the network infrastructure design review: <br/>
-                        <ul>
-                        <li>Protection and segregation of network assets;</li>
-                        <li>Network traffic filtering technology;</li>
-                        <li>Network layout and secure communication protocols;</li>
-                        <li>Deployment of network security assets;</li>
-                        <li>Network resilience and redundancy mechanisms; and</li>
-                        <li>Remote Administration of network assets.</li>
-                    </textarea><br />
-                    <button class="btn save_btn">Save</button>
+                    <textarea name="msgpost2" id="msgpost2">{{project.data.scope}}</textarea><br />
+                    <button type="submit" class="btn save_btn" ng-click="update(project.id)">Save</button>
                 </div>
                 
                 <div class="tab-pane" id="limitations">
                     <h2>3. Limitations and Restrictions</h2>
-                    <textarea name="msgpost3" id="msgpost3">
-                       <h5>Limitations of Controls</h5>
-            			<p>Given the inherent limitations in any system of control, projection of any evaluation of the controls to future periods is subject to the risk that the control procedures may become inadequate because of changes in systems, conditions or the degree of compliance with those procedures. Therefore, constant monitoring is needed to ensure that system controls that exist remain effective over time.</p>
-                        <h5>Limitations of Penetration Tests</h5>
-                        <p>The penetration test was conducted over a limited period and the related test procedures were performed on the system at a single point of time.  As such, the scope was limited to the known vulnerabilities and system configuration during the work period. The penetration tests and vulnerability assessments may not yield any vulnerability. However that does not indicate that the system has no vulnerability exposure. New vulnerabilities may be discovered over time and therefore continuous and timely measures should be taken to aDCress them.</p>
-                    </textarea><br />
-                    <button class="btn save_btn">Save</button>
+                    <textarea name="msgpost3" id="msgpost3">{{project.data.limitation}}</textarea><br />
+                    <button type="submit" class="btn save_btn" ng-click="update(project.id)">Save</button>
                 </div>
                 
                 <div class="tab-pane" id="riskRatings">
                 	<h2>4. Description of Risk Ratings</h2>
                     <p>A description of the risk ratings, which we used for categorizing our issues, is as follows:</p>
-                    <textarea name="msgpost4" id="msgpost4">
-                    <table class="table">
-                      <tr>
-                        <th scope="col">Risk Rating </th>
-                        <th scope="col">Description</th>
-                      </tr>
-                      <tr>
-                        <td>High</td>
-                        <td>The item mentioned is a requirement to be followed as it has significant impact on controls or operations. We advise that these items be aDCressed immediately. </td>
-                      </tr>
-                      <tr>
-                        <td>Medium </td>
-                        <td>The item mentioned may be a requirement based on regulatory requirements and/ or industry good practices, and has a moderate impact on controls, finance or operations. Compensating controls should be put in place if they are not implemented. </td>
-                      </tr>
-                      <tr>
-                        <td>Low</td>
-                        <td>The item mentioned has a low impact on controls, finance or operations if left uncorrected, but should be followed-up and evaluated as an opportunity for improvement. </td>
-                      </tr>
-                    </table>
-                    </textarea><br />
-                    <button class="btn save_btn">Save</button>
+                    <textarea name="msgpost4" id="msgpost4">{{project.data.risk}}</textarea><br />
+                    <button type="submit" class="btn save_btn" ng-click="update(project.id)">Save</button>
                 </div>
                 
                 <div class="tab-pane" id="findings">
                     <h2>5. Findings and Recommandations</h2>
-                    <textarea name="msgpost5" id="msgpost5">
-                       Review of Application & Network Infrastructure Design <br/>                    
-                        We have conducted a review of the ePortal application design and network infrastructure design. We have assessed the following controls during the network infrastructure design review: <br/>
-                        <ul>
-                        <li>Protection and segregation of network assets;</li>
-                        <li>Network traffic filtering technology;</li>
-                        <li>Network layout and secure communication protocols;</li>
-                        <li>Deployment of network security assets;</li>
-                        <li>Network resilience and redundancy mechanisms; and</li>
-                        <li>Remote Administration of network assets.</li>
-                    </textarea><br />
-                    <button class="btn save_btn">Save</button>
+                    <textarea name="msgpost5" id="msgpost5">{{project.data.recommendation}}</textarea><br />
+                    <button type="submit" class="btn save_btn" ng-click="update(project.id)">Save</button>
                 </div>
                 
                 
@@ -139,7 +90,7 @@
     <p>Copyright 2010-2013 PricewaterhouseCoopers. All rights reserved. </p>
     <!-- end .footer --></div>
   <!-- end .container --></div>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.1/angular.js"></script>
+  <div class="modal-backdrop"></div>
 </body>
 
     <script src="js/report_editor.js"></script>

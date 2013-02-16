@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!doctype html>
 <html lang="en" ng-app="myApp">
 <head>
@@ -278,3 +279,139 @@
   <!-- end .container --></div>
 </body>
 </html>
+=======
+<!doctype html>
+<html lang="en" ng-app="myApp">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PWC</title>
+<link href="css/main.css" rel="stylesheet" type="text/css">
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css">
+<link href="css/bootstrap-responsive.css" rel="stylesheet" type="text/css">
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/flick/jquery-ui.css" type="text/css" media="all" />
+<link href="css/task.css" rel="stylesheet" type="text/css">
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.1/angular.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular-resource.min.js"></script>
+<script type="text/javascript" ng:autobind src="http://code.angularjs.org/0.10.5/angular-0.10.5.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
+<script src="js/include.js"></script>
+<script src="js/addTasksJS.js"></script>
+<script src="js/addTasksController.js"></script>
+
+</head>
+
+<body ng-controller="BackendController">
+
+<div class="container">
+    <div class="header row"></div>
+  <div class="content">
+  	<div class="navbar"></div>
+  	<legend>Add Members for Tasks</legend>
+    <table class="table" id="emp_table">
+    <thead>
+      <tr>
+        <th scope="col">Add</th>
+        <th scope="col">Member</th>
+        <th scope="col">Ongoing Tasks</th>
+        <th scope="col">Earliest Deadline</th>
+        <th scope="col">Skills</th>
+      </tr>
+    </thead>
+		<tr ng-repeat = "entity in avail_members">	
+			<td><button class="btn" ng-click="selectMember(entity)"><i class="icon-plus"></button></td>
+			<td>{{entity.data.fullname}}</td>
+			<td><a href="#" id="popover" rel="popover" data-content="{{entity.data.tasks}}" data-original-title="Tasks" data-placement="right">{{entity.data.tasks.length}}</a></td>
+			<td>{{entity.data.deadline}}</td>
+			<td>{{entity.data.skills.join(", ")}}
+			</td>
+		</tr>
+      <tfoot>
+      <tr>
+        <th scope="col">Add</th>
+        <th scope="col">Member</th>
+        <th scope="col">Ongoing Tasks</th>
+        <th scope="col">Earliest Deadline</th>
+        <th scope="col">Skills</th>
+      </tr>
+      </tfoot>
+    </table><br/>
+    <div class="help-bolck alert" style="display:none;">Please choose at least one member to add tasks.</div>
+    <a class="btn" id="next_btn">Next</a>
+    <div class="task_wrap" style="display:none;">
+
+            <div class="row control-group">
+                <div class="span2" id="emp_list">
+                	<div data-spy="affix" data-offset-top="200">
+	                	<i>Employee List:</i>
+	                	<ul>
+						<li ng-repeat = "entity in assigned_members" id="{{entity.data.username}}">{{entity.data.fullname}}</li>
+	                    </ul>
+	                </div>
+                </div>
+            	<div class="span7">
+            	<legend>Tasks Allocation</legend>
+	                <p><a ng-click = "savetask(); clear();" id="add_task" class="btn">Add a New Task</a></p>
+            		<div class="accordion" id="accordion2">
+					  <div class="accordion-group" ng-repeat="task in project">
+					    <div class="accordion-heading">
+					      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#task{{task.id}}">
+					      	Task {{task.id}}: {{task.name}} <em ng-show="task.name.length==0&&task.start.length==0&&task.end.length==0&&task.resp.length==0">Start editing the task...</em>
+					      </a>
+					    </div>
+					    <div id="task{{task.id}}" class="accordion-body collapse">
+					      <div class="accordion-inner">
+					      	<div class="help-bolck alert" style="display:none;">Please fill up all the required blanks.</div>
+					        <label for="task_name">Task Name<sup>*</sup>:</label>
+					        <input type="text" id="task_name" ng-model = "task.name"/>
+					        <div class="row">
+					        	<div class="span3">
+							        <label for="dp{{task.id}}1">Start Date<sup>*</sup>:</label>
+			                        <input type="text" id="dp{{task.id}}1"  ng-model = "task.start" class="input-medium"/>
+		                        </div>
+		                        <div class="span2">
+							        <label for="dp{{task.id}}2">End Date<sup>*</sup>:</label>
+			                     	<input type="text" id="dp{{task.id}}2" ng-model = "task.end" class="input-medium"/>
+		                     	</div>
+	                     	</div>
+					        <label for="end_date">Hours/Day <small class="muted">(8 hours by default)</small>:</label>
+	                     	<input type="number" id="hours" ng-model = "task.hours" class="input-mir" min="0" max="8"/>
+					        <label for="members{{task.id}}">Who's responsible?<sup>*</sup><small class="muted">(Drag the member from 'Employee List')</small></label>
+	                    	<div type="text" id="members{{task.id}}" class="drop_member">
+	                    		<span ng-repeat="item in project[task.id-1].resp">
+	                    			<span class="label label-info"> 
+	                    			{{item}} <i class="icon-remove icon-white" ng-click="removeMember(task.id,item)"></i> 
+	                    			</span> 
+	                    		</span>
+	                    		<span id="m_task_id" style="visibility:hidden">{{task.id}}</span>
+	                    	</div>
+	                    	<div class="row">
+	                    	<a class="btn btn-danger pull-right" ng-click="removeTask(task.id)">Remove Task</a>
+	                    	</div>
+					      </div>
+					    </div>
+					  </div>
+					</div>
+		            <div class="row control-group">
+			            <div class="span5">
+				            <a class="btn" id="prev_btn">Prev</a>
+				            <button type="submit" class="btn btn-primary" ng-click ="add()">Finish</button>
+			            </div>
+		            </div>
+                </div>
+            </div>
+
+    </div>
+  </div>
+  <div class="footer">
+    <p>Copyright 2010-2013 PricewaterhouseCoopers. All rights reserved. </p>
+    <!-- end .footer --></div>
+  <!-- end .container --></div>
+</body>
+</html>
+>>>>>>> The second version of LinkAge

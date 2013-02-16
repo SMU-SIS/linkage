@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" ng-app="myApp">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,52 +8,95 @@
 <link href="css/bootstrap.css" rel="stylesheet" type="text/css">
 <link href="css/bootstrap-responsive.css" rel="stylesheet" type="text/css">
 <link rel="icon" href="favicon.ico" type="image/x-icon">
+<style type="text/css" title="currentStyle">@import "css/demo_table.css";</style>
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/flick/jquery-ui.css" type="text/css" media="all" />
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
-    <script src="js/include.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.1/angular.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular-resource.min.js"></script>
+<script src="js/include.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
+<script src="js/retrieveTasksController.js"></script>
+
 </head>
 
-<body>
+<body ng-controller="BackendController"> </br>
+  
 
 <div class="container">
     <div class="header row"></div>
 
   <div class="content">
   	<div class="navbar"></div>
-		<h3>Project FYP</h3>
+		<h3>Tasks for {{projectname}} </h3>
 	    <table class="table">
 	      <tr>
-	        <th scope="col">#</th>
+	        <th scope="col">id</th>
 	        <th scope="col">Task</th>
-	        <th scope="col">Person In Charge</th>
+	        <th scope="col">Members Involved</th>
 	        <th scope="col">Start Date</th>
 	        <th scope="col">End Date</th>
 	        <th scope="col">Hours</th>
-	        <th scope="col">Status</th>
-	        <th scope="col">Action</th>
+	        <th scope="col">Remarks</th>
+			<th scope="col"></th>
 	      </tr>
-	      <tr class="proj">
-	        <td>1</td>
-	        <td>Test on Windows</td>
-	        <td>YL</td>
-	        <td>12/12/12</td>
-	        <td>23/2/13</td>
-	        <td>100</td>
-	        <td>Started</td>
-	        <td><a class="btn edit_btn">Edit</a> <a class="btn del_btn">Delete</a></td>
+		 
+		{{error}}
+		 {{count(item)}}
+	      <tr ng-repeat = "item in avail_task">
+	        <td>{{item.id}}<br/></td>
+	        <td>{{item.data.name}}</td>
+	        <td><ul>
+                  <li ng-repeat="item in item.data.resp">{{item}}</li>
+    	          </ul>
+                </td>
+	        <td>{{item.data.start}}</td>
+	        <td>{{item.data.end}}</td>
+	        <td>{{item.data.hours}}</td>
+	        <td>{{item.data.status}}</td>
+	        <td>
+	        	<div class="edit field" ng-show="role == 'manager'">
+	        	<a class="btn edit_btn" href="#edittask" data-toggle="modal" ng-click="load(item['id'])"><i class="icon-edit"></i> Edit</a>
+				<a class="btn delete_btn" type="submit" name="delete" value="delete" ng-click = "delete(item['id'])" ><i class="icon-trash"></i> Delete</a></p></td>
+				</div>
+			</td>
 	      </tr>
-	      <tr class="proj">
-	        <td>2</td>
-	        <td>Test on Mac OS</td>
-	        <td>Doris</td>
-	        <td>21/11/12</td>
-	        <td>10/1/13</td>
-	        <td>100</td>
-	        <td>Submitted</td>
-	        <td><a class="btn edit_btn">Edit</a> <a class="btn del_btn">Delete</a></td>
-	      </tr>
+	      
+		
 	    </table>
-	    <button class="btn">Add Task</button>
+	    <a class="btn btn-primary" ng-click="addTask(item.data.id)">Add Tasks</a>
+		
+		
+		<div class="modal hide fade" id="edittask">
+     <div class="modal-header"><h3>Edit Task for {{projectname}}</h3></div>
+      <div class="modal-body" >
+      <label for="task" >Task:</label>
+       <input type="text" class="span3 input_issue" id="appendedDropdownButton" ng-model="item.data.name"> 
+	   <div class="text-error">{{change_taskname_error}} </div>
+      <label>Members Involved:</label>
+        <input type="text" class="span3 input_issue"  id="appendedDropdownButton" ng-model="item.data.resp[0]" disabled><br>
+        <div class="text-error">*Create a new task to edit the members involved </div>
+	    <label>Start Date: </label>
+        <input type="text" id="datepicker1" ng-model="item.data.start"><br>
+		 <div class="text-error">{{change_sDate_error}} </div>
+      <label>End Date: </label>
+        <input type="text" id="datepicker2" ng-model="item.data.end"><br>
+		<div class="text-error">{{change_eDate_error}} </div>
+       <label>Hours:</label>
+        <input type="text" class="span3 input_issue" id="appendedDropdownButton" ng-model="item.data.hours"><br>
+        <div class="text-error">{{change_hours_error}} </div>	
+	   <label>Remarks:</label>
+	    <input type="text" class="span3 input_issue" id="appendedDropdownButton" ng-model="item.data.status"><br>
+       
+      </div>
+	  <br>
+        <div class="modal-footer">
+            <a href="#" class="btn close_btn" data-dismiss="modal">Close</a>
+            <a href="#" class="btn btn-primary save_btn" ng-click ="update(item.id)">Save Changes</a>
+        </div>
+    </div>
+		
     <!-- end .content --></div>
   <div class="footer">
     <p>Copyright 2010-2013 PricewaterhouseCoopers. All rights reserved. </p>

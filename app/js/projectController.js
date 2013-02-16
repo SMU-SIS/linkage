@@ -1,26 +1,28 @@
-<!doctype html>
-<html lang="en" ng-app="myApp">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PWC</title>
-<link href="css/main.css" rel="stylesheet" type="text/css">
-<link href="css/bootstrap.css" rel="stylesheet" type="text/css">
-<link href="css/bootstrap-responsive.css" rel="stylesheet" type="text/css">
-<link rel="icon" href="favicon.ico" type="image/x-icon">
-<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/flick/jquery-ui.css" type="text/css" media="all" />
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.1/angular.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular-resource.min.js"></script>
-<<<<<<< HEAD
-    <script src="js/include.js"></script>
-
-<script language="javascript" type="text/javascript">
-      angular.module('myApp', ['ngResource']);
+angular.module('myApp', ['ngResource']);
       function MainCtrl($scope,$resource){
-      
+      $( "#datepicker1" ).datepicker({
+                   inline: true,
+                   dateFormat: 'dd/mm/yy',
+                   onSelect: function(dateText) {
+                       $("#datepicker2").datepicker("option","minDate", dateText)
+                       var modelPath = $(this).attr('ng-model');
+                       putObject(modelPath, $scope, dateText);
+                       $scope.$apply();
+                    }
+                });
+     
+      $( "#datepicker2" ).datepicker({
+                   inline: true,
+                   dateFormat: 'dd/mm/yy',
+                   
+                   onSelect: function(dateText) {
+                       $("#datepicker1").datepicker("option","maxDate", dateText)
+                       var modelPath = $(this).attr('ng-model');
+                       putObject(modelPath, $scope, dateText);
+                       $scope.$apply();
+                   }
+               });
+     
         $scope.gaEvent = function($event){
           $scope.clicked = $event.target.name;
           //Call your own backend to log an event.
@@ -29,35 +31,42 @@
         
         $scope.backend_locations = [
           {url : 'code-comparison.appspot.com', urlName : 'remote backend' },       
-          {url : 'linkageplay.appspot.com', urlName : 'linkageplay' },  
+          {url : 'linkagepwc.appspot.com', urlName : 'pwc' },  
           {url : 'localhost:8080', urlName : 'localhost' } ];
 
-        $scope.showdetails = true;
+        $scope.showdetails = false;
         $scope.apikey = "pwc";
         
         //Replace this url with your final URL from the SingPath API path. 
-       // $scope.remote_url = "localhost:8080";
-        $scope.remote_url = "code-comparison.appspot.com";
-        //$scope.remote_url = "linkagepwc.appspot.com";
+        //$scope.remote_url = "localhost:8080";
+        //$scope.remote_url = "code-comparison.appspot.com";
+        $scope.remote_url = "linkagepwc.appspot.com";
         $scope.model = "project";
         $scope.waiting = "Ready";
         
         $scope.item = {};
-        $scope.item.data = {"pro_name": "",
-                            "pro_mgr": "",
+        $scope.item.data = {"project": "",
+                            "manager": localStorage.getItem("username"),
                             "partner": "",
-                            "industry": ""
-                           
+                            "industry": "",
+                            "sDate": "",
+                            "eDate": "",
+                            "status": "In progress",
+                            "summary": "abc",
+                            "scope": "def",
+                            "limitation": "lmn",
+                            "risk":"opq",
+                            "recommendation":"xyz"
                            };
         
         //resource calls are defined here
 
         $scope.Model = $resource('http://:remote_url/:apikey/:model_type/:id',
-                                {},{'get': {method: 'JSONP', isArray: true, params:{callback: 'JSON_CALLBACK'}}
+                                {},{'get': {method: 'JSONP', isArray: false, params:{callback: 'JSON_CALLBACK'}}
                                    }
                             );
 
-      /* $scope.update = function(id){
+        $scope.update = function(id){
           $scope.UpdateResource = $resource('http://:remote_url/:apikey/:model/:id', 
                         {"remote_url":$scope.remote_url,"apikey":$scope.apikey,"model":$scope.model, "id":id }, 
                         {'update': { method: 'PUT',    params: {} }});
@@ -69,20 +78,21 @@
                   $scope.list();
                   $scope.waiting = "Ready";
                 });
-        }; */
+        };
         
         $scope.add = function(){
           $scope.SaveResource = $resource('http://:remote_url/:apikey/:model', 
                         {"remote_url":$scope.remote_url,"apikey":$scope.apikey,"model":$scope.model}, 
                         {'save': { method: 'POST',    params: {} }});
-          alert("aa");
-          $scope.waiting = "Loading";
-          var item = new $scope.SaveResource($scope.item.data);
+          
+          //var sDate = datepicker1( "option", "buttonText" );
+         
+        var item = new $scope.SaveResource($scope.item.data);
           $scope.item = item.$save(function(response) { 
-            alert(response);
-                 $scope.item = response;
+                  $scope.item = response;
                   $scope.list();
-                  $scope.waiting = "Ready";
+                  localStorage.setItem("project",$scope.item.data.project);
+                  window.location.href = "add_tasks.html";
                 }); 
         };
         
@@ -93,7 +103,7 @@
                  }
           $scope.waiting = "Updating";       
           $scope.Model.get(data,
-                function(response) { 
+            function(response) { 
                   $scope.items = response;
                   $scope.waiting = "Ready";
                 });  
@@ -149,53 +159,24 @@
         
         $scope.list();         
       }
-    </script>
 
+      function putObject(path, object, value) {
+        var modelPath = path.split(".");
 
-</head>
-<body ng-controller="MainCtrl">
+        function fill(object, elements, depth, value) {
+            var hasNext = ((depth + 1) < elements.length);
+            if(depth < elements.length && hasNext) {
+                if(!object.hasOwnProperty(modelPath[depth])) {
+                    object[modelPath[depth]] = {};
+                }
+                fill(object[modelPath[depth]], elements, ++depth, value);
+            } else {
+                object[modelPath[depth]] = value;
+            }
+        }
+        fill(object, modelPath, 0, value);
+    }
 
-=======
-<script src="js/include.js"></script>
-<script src="js/projectController.js"></script>
-
-</head>
-<body ng-controller="MainCtrl">
->>>>>>> The second version of LinkAge
-<div class="container">
-    <div class="header row"></div>
-
-  <div class="content">
-    <div class="navbar"></div>
-<<<<<<< HEAD
-    <form name="form1" method="post">
-=======
-    <form name="form1" method="post" ng-submit="add()">
->>>>>>> The second version of LinkAge
-      <fieldset>
-        <legend>Create Project</legend>
-        <div class="span4">
-            <label for="proj_name">Project Name:</label>
-            <input type="text" name='proj_name' id='proj_name' ng-model="item.data.project"  required>
-            <label>Partner: </label>
-            <input type="text" name='partner' id='partner' ng-model="item.data.partner" required>
-            <label>Industry: </label>
-            <input type="text" name='industry' id='industry' ng-model="item.data.industry" required>
-        </div>
-        <div class="span4">
-            <label>Start Date: </label>
-            <input type="text" name='sDate' id="datepicker1" ng-model="item.data.sDate">
-            <label>End Date: </label>
-            <input type="text" name='eDate' id="datepicker2" ng-model="item.data.eDate">
-            <br /> <br />
-            <button type="submit" class="btn btn-success">Add Tasks</button>
-        </div>
-      </fieldset>
-    </form>
-  </div>
-  <div class="footer">
-    <p>Copyright 2010-2013 PricewaterhouseCoopers. All rights reserved. </p>
-    <!-- end .footer --></div>
-  <!-- end .container --></div>
-</body>
-</html>
+    $(document).ready(function(){
+      $("#project").addClass("active");
+    });

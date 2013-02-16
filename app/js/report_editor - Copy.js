@@ -30,19 +30,16 @@ function BackendController($scope,$resource){
       $scope.UpdateResource = $resource('http://:remote_url/:apikey/:model/:id', 
                     {"remote_url":$scope.remote_url,"apikey":$scope.apikey,"model":$scope.model, "id":id }, 
                     {'update': { method: 'PUT',    params: {} }});
-      $scope.project.data.summary = $("iframe#msgpost1_editor").contents().find("body").html();
-      $scope.project.data.scope = $("iframe#msgpost2_editor").contents().find("body").html();
-      $scope.project.data.limitation = $("iframe#msgpost3_editor").contents().find("body").html();
-      $scope.project.data.risk = $("iframe#msgpost4_editor").contents().find("body").html();
-      $scope.project.data.recommandation = $("iframe#msgpost5_editor").contents().find("body").html();
-      var item = new $scope.UpdateResource($scope.project.data);
+      
+      var item = new $scope.UpdateResource($scope.item.data);
       item.$update(function(response) { 
-              $scope.project = response;
+              $scope.item = response;
               $scope.list();
             });
     };
     
     $scope.list = function(){
+        /*
       var data = {'remote_url':$scope.remote_url,
               'model_type':$scope.model,
               'apikey':$scope.apikey
@@ -50,12 +47,27 @@ function BackendController($scope,$resource){
       $scope.Model.get(data,
             function(response) { 
               $scope.items = response;
-              for(var i = 0; i < $scope.items.count; i++){
-                  if($scope.items.entities[i].data.project == localStorage.getItem("project")){
-                      $scope.project = $scope.items.entities[i];
-                  }
-              }
             }); 
+      var data2 = {'remote_url':$scope.remote_url,
+              'model_type':"log",
+              'apikey':$scope.apikey
+             }     
+      $scope.Model.get(data2,
+            function(response2) { 
+              $scope.last_log = response2;
+            });  
+        */
+        $scope.items = {"count": 1, "entities": [{"model": "project", "apikey": "pwc", "data": {"project": "asdf",
+                            "manager": "asdf", "partner": "asdf", "industry": "asdf",
+                            "sDate": "asdf", "eDate": "asdf", "status": "asdf",
+                            "summary": "asdf", "scope": "asdf", "limitation": "asdf", "risk":"asdf", "recom":"asdf"
+                           }, "id": 1}], "model": "project", "apikey": "pwc", "method": "get_entities"};
+        var id = 1;
+        for(var i = 0; i < $scope.items.count; i++){
+            if($scope.items.entities[i].id == id){
+                $scope.project = $scope.items.entities[i].data;
+            }
+        }
     };
             
     $scope.load = function(id){
@@ -151,7 +163,9 @@ function post_to_url(path, params, method) {
     document.body.appendChild(form);
     form.submit();
 }
-function initEditor(){
+
+$(document).ready(function(){
+    $("#report").addClass("active");
     var myEditor;
     for (var i = 1; i <= 5; i++) {
         myEditor = new YAHOO.widget.Editor('msgpost'+i, {
@@ -176,9 +190,4 @@ function initEditor(){
         }, myEditor, true);
         myEditor.render(); 
     };
-    $(".modal-backdrop").hide();
-}
-$(document).ready(function(){
-    $("#report").addClass("active");
-    setTimeout(initEditor, 1000);
 });

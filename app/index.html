@@ -9,15 +9,14 @@
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link href="css/bootstrap-responsive.css" rel="stylesheet" type="text/css">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+        <script src="js/webgl-heatmap.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular-resource.min.js"></script>
-    <script src="lib/angular/angular-mocks.js"></script>
-    <script src="js/userDM.js"></script>
     <script src="js/userController.js"></script>
 </head>
 
-<body ng-controller="MainCtrl">
+<body ng-controller="BackendController">
 <noscript>
 Please enable javascript to use this application.
 </noscript>
@@ -49,7 +48,7 @@ Please enable javascript to use this application.
                 <input type="checkbox" id="rmb_user"> Remember me
             </label>
             <div class="msg_box"><font class="text-error">{{alertMessage}}</font></div>
-            <button class="btn btn-primary signin_btn">Start Working!</button><br/>
+            <button class="btn btn-primary signin_btn" ng-submit="checkPassword()">Start Working!</button><br/>
             <a onclick="register()" class="switch">Don't have a Linkage Account?</a>
          </div>
          
@@ -64,7 +63,7 @@ Please enable javascript to use this application.
             <span class="help-bolck">{{signup_error_username}}</span>
         </div>
         <div class="control-group">
-            <input type="password" id="inputPassword" placeholder="Password" ng-model="newuser.password" required>
+            <input type="password" id="inputPassword" placeholder="Password (at least 8 letters long)" ng-model="newuser.password" required>
             <br/>
             <span class="help-bolck">{{signup_error_password}}</span>
         </div>
@@ -73,13 +72,13 @@ Please enable javascript to use this application.
             <br/>
             <span class="help-bolck">{{signup_error_c_password}}</span>
         </div>
-        <div class="control-group role_select">
+        <div class="control-group role_select" style="color:white;">
             What is your role? <br/>
             <input type="radio" ng-model="newuser.role" value="member" id="check_member"/> member
             <input type="radio" ng-model="newuser.role" value="manager" /> manager
         </div>
         <div class="control-group">
-            <button class="btn btn-primary signin_btn">Join Linkage!</button><br/>
+            <button class="btn btn-primary signin_btn" ng-submit="signup()">Join Linkage!</button><br/>
             <a onclick="signin()" class="switch">Sign in with existing Account?</a>
          </div>
          

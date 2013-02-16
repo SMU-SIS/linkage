@@ -16,13 +16,6 @@
                 <li><a href="projects.html">Completed Project</a></li>
               </ul>
         	</li>
-          <li class="dropdown" id="report">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Report<b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><a href="report.html">FYP</a></li>
-                <li><a href="report.html">PWC</a></li>
-              </ul>
-          </li>
           <li class="dropdown" id="schedule">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Schedule<b class="caret"></b></a>
               <ul class="dropdown-menu">
@@ -39,7 +32,22 @@
                 <li><a href="trending.html">Trending</a></li>
               </ul>
         	</li>
+        <li><a href="#" id="logout_logo">Sign out</a></li>
       </ul>
     </div><!-- /.nav-collapse -->
   </div>
 </div><!-- /navbar-inner -->
+<script type="text/javascript">
+$(document).ready(function(){
+  $("#home").click(function(){
+    localStorage.setItem("viewname",localStorage.getItem("username"));
+  });
+  $("#logout_logo").on("click",function(){
+      eraseCookie("user");
+      localStorage.removeItem("username");
+        localStorage.removeItem("fullname");
+        localStorage.removeItem("viewname");
+      window.location ="index.html";
+    });
+});
+</script>

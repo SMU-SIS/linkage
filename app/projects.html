@@ -15,17 +15,19 @@
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.1/angular.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular-resource.min.js"></script>
 <script src="js/include.js"></script>
-<script src="js/currentProjectController.js"></script>
+<script src="js/completeProjectController.js"></script>
 
 </head>
+
 <body ng-controller="MainCtrl">
+
 <div class="container">
    <div class="header row"></div>
 
-  <div class="content">    
+  <div class="content">
     <div class="navbar"></div>
     <div class="hero-unit" ng-show="!items.entities.length ||  items.entities.length == 0">
-      <p>There is no project currently.</p>
+      <p>There is no completed project.</p>
     </div>
             <table class="table" ng-show="items.entities.length ||  items.entities.length > 0">
               <tr>
@@ -40,19 +42,16 @@
               <tbody ng-repeat="item in items.entities">
                 <tr class="proj">
                   <td>{{item.id}}</td>
-                  <td><a ng-click="showNext(item['id'])">{{item.data.project}}</a></td>
+                  <td>{{item.data.project}}</td>
                   <td>{{item.data.partner}}</td>
                   <td>{{item.data.manager}}</td>
                   <td>{{item.data.sDate}}</td>
                   <td>{{item.data.eDate}}</td>
 				          <td>
-                    <div class="edit field" ng-show="role == 'manager'">
-                    <a class="btn edit_btn" href="#editdetails" data-toggle="modal" ng-click="load(item['id'])"><i class="icon-edit"></i> Edit</a>
-                    <a class="btn delete_btn" type="submit" data-toggle="modal" ng-click="delete(item['id'])"><i class="icon-trash"></i> Delete</a>
-                  </div>
+                    <a class="btn " data-toggle="modal" ng-click="delete(item['id'])"></i>  Delete</a>
                   </td>
                 </tr>
-                <tr class="projDetail" id="{{item['id']}}" style="display:none;">
+                <tr>
                   <td></td>
                   <td colspan="6">
                   <p>
@@ -69,9 +68,9 @@
                   
                   </p>
                   <div class="btn-toolbar">
-                  <a class="btn btn-primary" ng-click="linkTask(item.data.project)">Show Tasks</a>
+                  <a class="btn btn-primary" ng-click="linkTask(item.data.project)">Tasks</a>
                     <div class="btn-group">
-                      <a class="btn" ng-click="linkReport(item.data.project)">Report</a>
+                      <a href="report.html" class="btn">Report</a>
                       <a href="issues.html" class="btn">Issues</a>
                     </div>
                   </div>
@@ -82,7 +81,7 @@
     <!-- end .content --></div>
   <div class="footer">
     <p>Copyright 2010-2013 PricewaterhouseCoopers. All rights reserved. </p>
-  <!-- end .footer --></div>
+    <!-- end .footer --></div>
 	
 	<div class="modal hide fade" id="editdetails">
      <div class="modal-header"><h3>Update Project Information</h3></div>
@@ -106,7 +105,6 @@
       </div>
 	
   <!-- end .container --></div>
-  <div class="modal-backdrop"></div>
 </body>
 
 </html>

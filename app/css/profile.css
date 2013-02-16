@@ -1,0 +1,43 @@
+.skill_list{
+	margin: 0;
+	list-style: none;
+}
+.skill_list li{
+	float: left;
+	margin: 3px;
+}
+.skill_list li i:hover{
+	cursor: pointer;
+}
+
+.noti_sidebar{
+	border-radius: 5px;
+	width: 200px;
+	float: left;
+	min-height: 1px;
+	margin-left: 20px;
+	background-color: #fafafa;
+  background-image: -moz-linear-gradient(top, #ffffff, #f2f2f2);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#f2f2f2));
+  background-image: -webkit-linear-gradient(top, #ffffff, #f2f2f2);
+  background-image: -o-linear-gradient(top, #ffffff, #f2f2f2);
+  background-image: linear-gradient(to bottom, #ffffff, #f2f2f2);
+  background-repeat: repeat-x;
+  border: 1px solid #d4d4d4;
+}
+.quot {
+font-size: 25px;
+color: #0088cc;
+}
+.schedule_summary{
+	margin-top:18px;
+}
+.schedule_summary table { table-layout: fixed; }
+.schedule_summary table th, table td { overflow: hidden; }
+.schedule_summary table td.marked{
+	background-color: #0088cc;
+	text-align:center;
+}
+.schedule_summary .task_col{
+	width:width: 30%;
+}

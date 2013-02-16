@@ -1,6 +1,6 @@
 $(document).ready(function(){
     $(".header").load("header.html");
-    $('.footer').load("footer.html");
+    $(".footer").load("footer.html");
     var role = readCookie("user");
 	if (role == "member") {
 		$(".navbar").load("navbar_member.html");

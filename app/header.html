@@ -3,17 +3,5 @@
 	<li>
 	  	<a href="notification.html" class="noti"><i class="icon-globe-large"></i><sup class="noti_num">1</sup></a>
 	  	<a href="message.html"><i class="icon-envelope-large"></i><sup class="msg_num">2</sup></a>
-	  	<a href="#" rel="tooltip" data-placement="right" data-original-title="Logout"><i class="icon-cogwheel-large"></i></a>
   	</li>
 </ul>
-
-<script type="text/javascript">
-$(document).ready(function(){
-    $("[rel='tooltip']").tooltip();
-    $(".icon-cogwheel-large").on("click",function(){
-    	eraseCookie("user");
-    	localStorage.setItem("user", "");
-    	window.location ="index.html";
-    });
-});
-</script>
