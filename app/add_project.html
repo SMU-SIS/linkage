@@ -12,6 +12,8 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.1/angular.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular-resource.min.js"></script>
     <script src="js/include.js"></script>
 
 <script language="javascript" type="text/javascript">
@@ -26,36 +28,35 @@
         
         $scope.backend_locations = [
           {url : 'code-comparison.appspot.com', urlName : 'remote backend' },       
-          {url : 'linkagepwc.appspot.com', urlName : 'pwc' },  
+          {url : 'linkageplay.appspot.com', urlName : 'linkageplay' },  
           {url : 'localhost:8080', urlName : 'localhost' } ];
 
-        $scope.showdetails = false;
+        $scope.showdetails = true;
         $scope.apikey = "pwc";
         
         //Replace this url with your final URL from the SingPath API path. 
-        //$scope.remote_url = "localhost:8080";
-        //$scope.remote_url = "code-comparison.appspot.com";
-        $scope.remote_url = "linkagepwc.appspot.com";
+       // $scope.remote_url = "localhost:8080";
+        $scope.remote_url = "code-comparison.appspot.com";
+        //$scope.remote_url = "linkagepwc.appspot.com";
         $scope.model = "project";
         $scope.waiting = "Ready";
         
         $scope.item = {};
-        $scope.item.data = {"project": "ABC",
-                            "manager": "Andy",
-                            "partner": "Jane",
-                            "industry": "Hospital",
-                            "sDate": "2011/03/05",
-                            "eDate": "2011/04/05"
+        $scope.item.data = {"pro_name": "",
+                            "pro_mgr": "",
+                            "partner": "",
+                            "industry": ""
+                           
                            };
         
         //resource calls are defined here
 
         $scope.Model = $resource('http://:remote_url/:apikey/:model_type/:id',
-                                {},{'get': {method: 'JSONP', isArray: false, params:{callback: 'JSON_CALLBACK'}}
+                                {},{'get': {method: 'JSONP', isArray: true, params:{callback: 'JSON_CALLBACK'}}
                                    }
                             );
 
-        $scope.update = function(id){
+      /* $scope.update = function(id){
           $scope.UpdateResource = $resource('http://:remote_url/:apikey/:model/:id', 
                         {"remote_url":$scope.remote_url,"apikey":$scope.apikey,"model":$scope.model, "id":id }, 
                         {'update': { method: 'PUT',    params: {} }});
@@ -67,17 +68,18 @@
                   $scope.list();
                   $scope.waiting = "Ready";
                 });
-        };
+        }; */
         
         $scope.add = function(){
           $scope.SaveResource = $resource('http://:remote_url/:apikey/:model', 
                         {"remote_url":$scope.remote_url,"apikey":$scope.apikey,"model":$scope.model}, 
                         {'save': { method: 'POST',    params: {} }});
-       
+          alert("aa");
           $scope.waiting = "Loading";
           var item = new $scope.SaveResource($scope.item.data);
           $scope.item = item.$save(function(response) { 
-                  $scope.item = response;
+            alert(response);
+                 $scope.item = response;
                   $scope.list();
                   $scope.waiting = "Ready";
                 }); 
@@ -150,14 +152,14 @@
 
 
 </head>
-<body ng-controller="MainCtrl" ng-click="gaEvent($event)">
+<body ng-controller="MainCtrl">
 
 <div class="container">
     <div class="header row"></div>
 
   <div class="content">
     <div class="navbar"></div>
-    <form name="form1" method="post" action="add_tasks.html">
+    <form name="form1" method="post">
       <fieldset>
         <legend>Create Project</legend>
         <div class="span4">
