@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" ng-app="myApp">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,116 +9,110 @@
 <link href="css/bootstrap-responsive.css" rel="stylesheet" type="text/css">
 <link rel="icon" href="favicon.ico" type="image/x-icon">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/flick/jquery-ui.css" type="text/css" media="all" />
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
-    <script src="js/include.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.1/angular.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular-resource.min.js"></script>
+<script src="js/include.js"></script>
+<script src="js/teamMember.js"></script>
+
 </head>
 
-<body>
+<body ng-controller="MainCtrl">
+
 
 <div class="container">
     <div class="header row"></div>
 
+
   <div class="content">
     <div class="navbar"></div>
-            <form class="form-search">
-              <div class="input-append">
-                <input type="text" class="span2 search-query" placeholder="Enter a name...">
-                <button type="submit" class="btn">Search</button>
-              </div>
-            </form>
+         <form name="search" onSubmit="return findString(this.string.value);"> 
+         
+            <input name="string" type="text" size=12 onChange="n = 0;" placeholder ="Search username"> 
+
+           
+           </div>
+       </form>
+
+    <script language="JavaScript"> 
+var TRange=null;
+
+function findString (str) {
+ if (parseInt(navigator.appVersion)<4) return;
+ var strFound;
+ if (window.find) {
+
+  // CODE FOR BROWSERS THAT SUPPORT window.find
+
+  strFound=self.find(str);
+  if (!strFound) {
+   strFound=self.find(str,0,1);
+   while (self.find(str,0,1)) continue;
+  }
+ }
+ else if (navigator.appName.indexOf("Microsoft")!=-1) {
+
+  // EXPLORER-SPECIFIC CODE
+
+  if (TRange!=null) {
+   TRange.collapse(false);
+   strFound=TRange.findText(str);
+   if (strFound) TRange.select();
+  }
+  if (TRange==null || strFound==0) {
+   TRange=self.document.body.createTextRange();
+   strFound=TRange.findText(str);
+   if (strFound) TRange.select();
+  }
+ }
+ else if (navigator.appName=="Opera") {
+  alert ("Opera browsers not supported, sorry...")
+  return;
+ }
+ if (!strFound) alert (str+"' not found!")
+ return;
+} </script>
+    
+
+   
+
+
+
+
+                
             <ul class="thumbnails">
-              <li class="span4">
+
+             <div ng-repeat="item in items.entities">
+             <li class="span4">
+
+               
                 <div class="thumbnail">
                   <div class="caption">
                       <form action="">
                          
-                    <h3><a href="javascript:hyperlink1()">Li Lu</a></h3>
-                    <script type="text/javascript">
-                    function hyperlink1(){
-                          localStorage.setItem("viewname", "Li Lu");
-                          window.location.href = 'profile.html';
-                    }   
+                    <h3><a href="javascript:hyperlink1()">{{item.data.fullname}}</a></h3>
+
+                     <h4>Current Projects: </h4>
+                     <ul>
+                <li ng-repeat="project in item.data.projects">{{project}}</li>
+              </ul>
+             
+
+                   <script>
+                   function hyperlink1(){
+                      localStorage.setItem("viewname", "{{item.data.username}}");
+                       window.location.href = 'profile.html';
+                    }
                     </script>
-                    <p>Current Projects: </p>
-                    <div class="editable">Perform Windows Configuration <br/> Window Server Testing</div><br/>
-                    <p><a href="grading.jsp" class="btn btn-primary">Grading</a> <a class="btn edit_btn">Edit</a><a class="btn save_btn" style="display:none;">Save</a></p>
+                    
+
+                    <h2><a href="grading.jsp" class="btn btn-primary">Data Analysis</a> <a class="btn edit_btn">Edit</a><a class="btn save_btn" style="display:none;">Save</a></h2>
                   </div>
                 </div>
               </li>
-              <li class="span4">
-                <div class="thumbnail">
-                  <div class="caption">
-                    <h3><a href="javascript:hyperlink2()">Lydia</a></h3>
-                    <script type="text/javascript">
-                    function hyperlink2(){
-                          localStorage.setItem("viewname", "Lydia");
-                          window.location.href = 'profile.html';
-                    }   
-                    </script>
-                    <p>Current Projects: </p>
-                    <div class="editable">Perform Windows Configuration <br/> Window Server Testing</div><br/>
-                    <p><a href="grading.jsp" class="btn btn-primary">Grading</a> <a class="btn edit_btn">Edit</a><a class="btn save_btn" style="display:none;">Save</a></p>
-                  </div>
-                </div>
-              </li>
-              <li class="span4">
-                <div class="thumbnail">
-                  <div class="caption">
-                    <h3><a href="javascript:hyperlink3()">Yahui</a></h3>
-                    <script type="text/javascript">
-                    function hyperlink3(){
-                          localStorage.setItem("viewname", "Yahui");
-                          window.location.href = 'profile.html';
-                    }   
-                    </script>
-                    <p>Current Projects: </p>
-                    <div class="editable">Perform Windows Configuration <br/> Window Server Testing</div><br/>
-                    <p><a href="grading.jsp" class="btn btn-primary">Grading</a> <a class="btn edit_btn">Edit</a><a class="btn save_btn" style="display:none;">Save</a></p>
-                  </div>
-                </div>
-              </li>
-              <li class="span4">
-                <div class="thumbnail">
-                  <div class="caption">
-                    <h3><a href="javascript:hyperlink4()">Yinglin</a></h3>
-                    <script type="text/javascript">
-                    function hyperlink4(){
-                          localStorage.setItem("viewname", "Yinglin");
-                          window.location.href = 'profile.html';
-                    }   
-                    </script>
-                    <p>Current Projects: </p>
-                    <div class="editable">Perform Windows Configuration <br/> Window Server Testing</div><br/>
-                    <p><a href="grading.jsp" class="btn btn-primary">Grading</a> <a class="btn edit_btn">Edit</a><a class="btn save_btn" style="display:none;">Save</a></p>
-                  </div>
-                </div>
-              </li>
-              <li class="span4">
-                <div class="thumbnail">
-                  <div class="caption">
-                    <h3><a href="#">Jerome</a></h3>
-                    <p>Current Projects: </p>
-                    <div class="editable">Perform Windows Configuration <br/> Window Server Testing</div><br/>
-                    <p><a href="grading.jsp" class="btn btn-primary">Grading</a> <a class="btn edit_btn">Edit</a><a class="btn save_btn" style="display:none;">Save</a></p>
-                  </div>
-                </div>
-              </li>
-              <li class="span4">
-                <div class="thumbnail">
-                  <div class="caption">
-                    <h3><a href="javascript:hyperlink5()">Zhenyu</a></h3>
-                    <script type="text/javascript">
-                    function hyperlink5(){
-                          localStorage.setItem("viewname", "Zhenyu");
-                          window.location.href = 'profile.html';
-                    }   
-                    </script>
-                    <p>Current Projects: </p>
-                    <div class="editable">Perform Windows Configuration <br/> Window Server Testing</div><br/>
-                    <p><a href="grading.jsp" class="btn btn-primary">Grading</a> <a class="btn edit_btn">Edit</a><a class="btn save_btn" style="display:none;">Save</a></p>
-                  </div>
-                </div>
-              </li>
+           
             </ul>
     <!-- end .content --></div>
   <div class="footer">
@@ -140,5 +134,10 @@ $(document).ready(function(e) {
 	});
 	$("#skillset").addClass("active");
 });
+var TRange=null;
+
+
+
+                     
 </script>
 </html>

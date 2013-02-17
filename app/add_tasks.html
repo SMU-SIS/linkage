@@ -380,7 +380,7 @@
 		                     	</div>
 	                     	</div>
 					        <label for="end_date">Hours/Day <small class="muted">(8 hours by default)</small>:</label>
-	                     	<input type="number" id="hours" ng-model = "task.hours" class="input-mir" min="0" max="8"/>
+	                     	<input type="number" id="hours" ng-model = "task.hours" class="input-mini" min="0" max="8"/>
 					        <label for="members{{task.id}}">Who's responsible?<sup>*</sup><small class="muted">(Drag the member from 'Employee List')</small></label>
 	                    	<div type="text" id="members{{task.id}}" class="drop_member">
 	                    		<span ng-repeat="item in project[task.id-1].resp">
